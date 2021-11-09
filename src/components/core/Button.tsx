@@ -10,8 +10,16 @@ const Button = ({ onClick, children, className }) => {
         {`
           button {
             border: none;
+            min-width: 150px;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
           }
 
+          button:hover {
+            transform: scale(1.1);
+          }
           button:hover,
           button:active {
             outline: none;

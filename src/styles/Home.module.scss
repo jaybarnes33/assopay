@@ -4,7 +4,7 @@
 
 .main {
   min-height: 100vh;
-  padding: 4rem 0;
+  padding: 4rem 1rem;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -17,9 +17,23 @@
     display: grid;
     place-items: center;
     gap: 2rem;
+
+    .text {
+      color: #eaeaea;
+      font-size: 2rem;
+      letter-spacing: 0.15rem;
+      text-transform: capitalize;
+    }
+
     .buttons {
       display: flex;
       gap: 1rem;
+      justify-content: center;
+      align-items: center;
+
+      @media screen and (max-width: 768px) {
+        flex-direction: column;
+      }
     }
   }
 }

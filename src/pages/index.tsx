@@ -19,7 +19,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <div className={styles.inner_grid}>
-          <div>Welcome to the ACSES - UMaT portal</div>
+          <div className={styles.text}>Welcome to the ACSES - UMaT portal</div>
           <div className={styles.buttons}>
             <Button
               onClick={() => router.push("/dues")}
