@@ -43,7 +43,9 @@ const Login = () => {
               <small onClick={() => setShow(!show)}>Show Password</small>
             </div>
             <Link href="/register">
-              <small className="link">Don't have an account? Register </small>
+              <small className="link">
+                Don&apos;t have an account? Register{" "}
+              </small>
             </Link>
 
             <Button className="btn-primary btn-sm" type="submit">
