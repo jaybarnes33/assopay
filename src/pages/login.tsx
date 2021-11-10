@@ -1,19 +1,11 @@
-<<<<<<< HEAD
-import React, { useState } from "react";
-import Image from "next/image";
-import styles from "../styles/Forms.module.scss";
-import Button from "@/components/core/Button";
-import Left from "@/components/Forms/Left";
-import Alert from "@/components/core/Alert";
-import Link from "next/link";
-import Head from "next/head";
-=======
 import React, { useState } from "react"
-import styles from "../styles/Home.module.scss"
-import Button from "../components/core/Button"
-import router from "next/router"
-
->>>>>>> core-components
+import Image from "next/image"
+import styles from "../styles/Forms.module.scss"
+import Button from "@/components/core/Button"
+import Left from "@/components/Forms/Left"
+import Alert from "@/components/core/Alert"
+import Link from "next/link"
+import Head from "next/head"
 const Login = () => {
   const [show, setShow] = useState(false)
 
@@ -50,7 +42,7 @@ const Login = () => {
               <br />
               <small onClick={() => setShow(!show)}>Show Password</small>
             </div>
-            <Link href="/register">
+            <Link href="/register" passHref>
               <small className="link">
                 Don&apos;t have an account? Register{" "}
               </small>

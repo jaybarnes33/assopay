@@ -17,6 +17,11 @@
       font-family: var(--secondary-font);
       padding: 1rem;
       text-transform: capitalize;
+
+      @media (min-width: 320px) {
+        font-size: 3.2rem;
+        line-height: 1rem;
+      }
     }
 
     .buttons {
