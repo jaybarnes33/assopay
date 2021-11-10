@@ -1,4 +1,17 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css");
+
+:root {
+  --primary-color: #134824;
+  --primary-color-focus: #28723f;
+  --primary-color-active: #399456;
+  --light-color: #f4f4f4;
+  --light-color-focus: #d8d8d8;
+  --light-color-active: #ddd;
+
+  --primary-font: "poppins", sans-serif;
+  --secondary-font: "Montserrat", sans-serif;
+}
+
 html,
 body {
   padding: 0;

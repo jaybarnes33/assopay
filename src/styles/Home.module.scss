@@ -8,15 +8,14 @@
   align-items: center;
 
   .inner_grid {
-    display: grid;
-    place-items: center;
-    gap: 2rem;
+    display: flex;
+    flex-direction: column;
 
     .text {
       color: #eaeaea;
       font-size: 2rem;
+      font-family: var(--secondary-font);
       padding: 1rem;
-      letter-spacing: 0.15rem;
       text-transform: capitalize;
     }
 

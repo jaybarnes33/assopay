@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
 import Image from "next/image";
 import styles from "../styles/Forms.module.scss";
@@ -6,10 +7,17 @@ import Left from "@/components/Forms/Left";
 import Alert from "@/components/core/Alert";
 import Link from "next/link";
 import Head from "next/head";
-const Login = () => {
-  const [show, setShow] = useState(false);
+=======
+import React, { useState } from "react"
+import styles from "../styles/Home.module.scss"
+import Button from "../components/core/Button"
+import router from "next/router"
 
-  const submitHandler = () => {};
+>>>>>>> core-components
+const Login = () => {
+  const [show, setShow] = useState(false)
+
+  const submitHandler = () => {}
   return (
     <div className={styles.main}>
       <Head>
@@ -55,7 +63,7 @@ const Login = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

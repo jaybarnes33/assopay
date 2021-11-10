@@ -1,11 +1,10 @@
-import { useRouter } from "next/dist/client/router";
-import Head from "next/head";
-import Image from "next/image";
-import Button from "../components/core/Button";
-import styles from "../styles/Home.module.scss";
+import Head from "next/head"
+import Link from "next/link"
+import buttonStyles from "@/components/core/Button/button.module.scss"
+import styles from "../styles/Home.module.scss"
+import { joinClasses } from "@/utils/join-classes"
 
 export default function Home() {
-  const router = useRouter();
   return (
     <>
       <Head>
@@ -18,31 +17,36 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <div className={styles.inner_grid}>
-          <div className={styles.text}>Welcome to the ACSES - UMaT portal</div>
+        <section id="hero" className={styles.inner_grid}>
+          <h1 className={styles.text}>Welcome to the ACSES - UMaT portal</h1>
           <div className={styles.buttons}>
-            <Button
-              onClick={() => router.push("/dues")}
-              className="btn-main-outline"
-            >
-              Pay Dues
-            </Button>
-            <Button onClick={() => router.push("/login")} className="btn-main">
-              Login
-            </Button>
-            <Button
-              onClick={() => router.push("/register")}
-              className="btn-main"
-            >
-              Register
-            </Button>
+            <Link href="/dues">
+              <a
+                className={joinClasses(
+                  buttonStyles.button,
+                  buttonStyles["button-main-light"]
+                )}
+              >
+                Pay Dues
+              </a>
+            </Link>
+            <Link href="/register">
+              <a
+                className={joinClasses(
+                  buttonStyles.button,
+                  buttonStyles["button-outlined-light"]
+                )}
+              >
+                Register
+              </a>
+            </Link>
           </div>
-        </div>
+        </section>
       </main>
 
       <footer className={styles.footer}>
         &copy; Copyright - {new Date().getFullYear()}
       </footer>
     </>
-  );
+  )
 }
