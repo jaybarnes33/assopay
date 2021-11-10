@@ -36,6 +36,15 @@
       background-blend-mode: overlay;
       background-size: cover;
     }
+
+    .form_container {
+      padding: 1rem;
+      min-height: 70vh;
+      background-color: #ffffffee;
+      .buttons {
+        bottom: 1rem;
+      }
+    }
   }
 }
 .form_container {
@@ -52,21 +61,34 @@
     width: 100%;
   }
 
-  button {
-    display: flex;
-    margin-left: auto;
-    font-weight: bold;
+  .inner {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 100%;
+    gap: 2rem;
+
+    @media screen and (max-width: 768px) {
+      grid-template-columns: 100%;
+    }
   }
   .input {
     width: 100%;
-    margin: 1rem 0;
+    height: 2rem;
     input {
       width: 100%;
-      height: 2rem;
+      height: 100%;
     }
   }
 
   .input:focus-within {
     border-color: #0abb87 !important;
+  }
+
+  .buttons {
+    position: absolute;
+    bottom: -1rem;
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
   }
 }
