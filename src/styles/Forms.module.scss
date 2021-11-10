@@ -36,6 +36,11 @@
       background-blend-mode: overlay;
       background-size: cover;
     }
+
+    .form_container {
+      padding: 1rem;
+      // background-color: #ffffffee;
+    }
   }
 }
 .form_container {
@@ -64,10 +69,31 @@
       background-color: darken(#5578eb, 10);
     }
   }
+  .inner {
+    width: 100%;
+    display: grid;
+
+    // two columns
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    @media screen and (max-width: 768px) {
+      grid-template-columns: 100%;
+
+      .row {
+        gap: 0;
+        flex-wrap: wrap;
+      }
+    }
+  }
 
   .input {
     width: 100%;
-    margin: 1rem 0;
+    margin: 0.5rem 0;
     color: var(--light-color);
 
     & > div {
@@ -86,24 +112,26 @@
     }
 
     label {
-      margin: 8px 0;
       display: inline-block;
     }
 
-    input {
+    input,
+    select {
       width: 100%;
       padding: 0.8rem;
       border-radius: 5px;
       border: 1px solid #c0c0c0;
       font-family: var(--primary-font);
       font-size: 1rem;
+      color: #212121;
     }
 
-    .input:focus-within {
+    .input:focus-within,
+    .select:focus-within {
       border-color: #0abb87 !important;
     }
 
-    @media (min-width: 770px) {
+    @media (min-width: 768px) {
       label {
         color: #212121;
       }
@@ -131,7 +159,7 @@
     }
   }
 
-  @media (min-width: 770px) {
+  @media (min-width: 768px) {
     a {
       color: #212121;
 
@@ -140,5 +168,15 @@
         text-decoration: underline;
       }
     }
+  }
+}
+.buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  width: 100%;
+
+  button {
+    max-width: 50px !important;
   }
 }

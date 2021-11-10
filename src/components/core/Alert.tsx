@@ -1,8 +1,8 @@
-import { ReactNode } from "react"
+import { ReactNode } from "react";
 
 interface AlertProps {
-  variant?: string
-  children: ReactNode
+  variant?: string;
+  children: ReactNode;
 }
 const Alert = ({ variant, children }: AlertProps) => {
   return (
@@ -13,11 +13,9 @@ const Alert = ({ variant, children }: AlertProps) => {
       <style jsx>
         {`
           .alert {
+            width: 100%;
             display: flex;
-            align-items: stretch;
-            padding: 1rem 1rem;
-            margin: 0 0 20px;
-            border-radius: 4px;
+            justify-content: center;
           }
 
           .alert-text {
@@ -28,18 +26,26 @@ const Alert = ({ variant, children }: AlertProps) => {
           }
 
           .info {
+            left: 0;
             background-color: #5578eb;
             border: #5578eb;
             position: absolute;
-            top: -5rem;
+            top: -1rem;
             width: 100%;
+            border-radius: 4px 4px 0 0;
             text-align: center;
             color: #f4f4f4;
+          }
+
+          @media screen and (max-width: 1024px) {
+            .info {
+              top: -4rem;
+            }
           }
         `}
       </style>
     </>
-  )
-}
+  );
+};
 
-export default Alert
+export default Alert;
