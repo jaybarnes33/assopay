@@ -28,7 +28,7 @@ $variants: main, outlined;
           background-color: transparent;
         }
 
-        &-#{$color} {
+        &-#{$color}:not(:disabled) {
           @if $variant == outlined {
             --#{$color}-color-focus: var(--outlined-#{$color}-focus);
             --#{$color}-color-active: var(--outlined-#{$color}-active);

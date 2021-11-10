@@ -1,8 +1,8 @@
-import { ReactNode } from "react";
+import { ReactNode } from "react"
 
 interface AlertProps {
-  variant?: string;
-  children: ReactNode;
+  variant?: string
+  children: ReactNode
 }
 const Alert = ({ variant, children }: AlertProps) => {
   return (
@@ -39,7 +39,7 @@ const Alert = ({ variant, children }: AlertProps) => {
         `}
       </style>
     </>
-  );
-};
+  )
+}
 
-export default Alert;
+export default Alert

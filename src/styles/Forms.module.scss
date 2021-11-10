@@ -44,6 +44,7 @@
   width: min(80%, 400px);
   border-radius: 3px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
@@ -52,21 +53,92 @@
     width: 100%;
   }
 
-  button {
-    display: flex;
-    margin-left: auto;
-    font-weight: bold;
-  }
-  .input {
+  button[type="submit"]:not(:disabled) {
+    margin: 20px auto 16px;
     width: 100%;
-    margin: 1rem 0;
-    input {
-      width: 100%;
-      height: 2rem;
+    color: white;
+    background-color: #5578eb;
+
+    &:hover,
+    &:focus {
+      background-color: darken(#5578eb, 10);
     }
   }
 
-  .input:focus-within {
-    border-color: #0abb87 !important;
+  .input {
+    width: 100%;
+    margin: 1rem 0;
+    color: var(--light-color);
+
+    & > div {
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        background-color: transparent;
+        font-family: var(--primary-font);
+        font-size: 1rem;
+        margin-top: 4px;
+        border: none;
+        color: var(--light-color);
+        cursor: pointer;
+      }
+    }
+
+    label {
+      margin: 8px 0;
+      display: inline-block;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 5px;
+      border: 1px solid #c0c0c0;
+      font-family: var(--primary-font);
+      font-size: 1rem;
+    }
+
+    .input:focus-within {
+      border-color: #0abb87 !important;
+    }
+
+    @media (min-width: 770px) {
+      label {
+        color: #212121;
+      }
+
+      & > div {
+        button[type="button"] {
+          color: #212121;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+.links {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+
+  a {
+    color: #c4c4c4;
+
+    &:last-child {
+      text-align: right;
+    }
+  }
+
+  @media (min-width: 770px) {
+    a {
+      color: #212121;
+
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+      }
+    }
   }
 }

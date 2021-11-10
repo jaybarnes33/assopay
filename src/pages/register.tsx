@@ -27,34 +27,54 @@ const Signup = () => {
             </p>
           </Alert>
 
-          <form onSubmit={submitHandler} className={styles.form}>
+          <form
+            id="register"
+            name="sign-up"
+            onSubmit={submitHandler}
+            className={styles.form}
+          >
             <div className={styles.input}>
+              <label htmlFor="email">Student Email</label>
               <input
-                type="text"
+                id="email"
+                type="email"
                 name="email"
-                placeholder="Please enter your student email"
+                placeholder="Ex. ce-jdoe6020@st.umat.edu.gh"
               />
             </div>
             <div className={styles.input}>
+              <label htmlFor="password">Password</label>
               <input
+                id="password"
                 type={!show ? "password" : "text"}
                 name="password"
-                placeholder="Please enter your password"
+                autoComplete="new-password"
               />
-              <br />
-              <br />
-              <small onClick={() => setShow(!show)}>Show Password</small>
+              <div>
+                <button type="button" onClick={() => setShow(!show)}>
+                  show password
+                </button>
+              </div>
             </div>
-            <Link href="/login" passHref>
-              <small className="link">Already have an account? Login </small>
-            </Link>
-
-            <Button className="btn-primary btn-sm" type="submit">
+            <Button type="submit" className="blue-bg" color="light">
               Submit
             </Button>
           </form>
+          <div className={styles.links}>
+            <Link href="/forgot-password">
+              <a className="link">Forgot Password</a>
+            </Link>
+            <Link href="/login">
+              <a className="link">Already have an account? Login </a>
+            </Link>
+          </div>
         </div>
       </div>
+      <style jsx>{`
+        .blue-bg {
+          background-color: #5578eb;
+        }
+      `}</style>
     </div>
   )
 }
