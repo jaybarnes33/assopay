@@ -20,6 +20,7 @@ const Dues = () => {
       router.push("/login");
     } else {
       if (user) {
+        console.log(user);
         initializePayment();
       }
     }
