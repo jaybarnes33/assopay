@@ -14,7 +14,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "baseUrl": "./src",
+    "baseUrl": "./src/",
     "paths": {
       "@/lib/*": ["lib/*"],
       "@/data/*": ["data/*"],
