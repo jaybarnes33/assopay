@@ -17,7 +17,11 @@
     "baseUrl": "./src",
     "paths": {
       "@/lib/*": ["lib/*"],
+      "@/data/*": ["data/*"],
       "@/utils/*": ["utils/*"],
+      "@/hooks/*": ["hooks/*"],
+      "@/models/*": ["models/*"],
+      "@/styles/*": ["styles/*"],
       "@/components/*": ["components/*"]
     }
   },

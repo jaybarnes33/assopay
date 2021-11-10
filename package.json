@@ -8,15 +8,18 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@types/mongoose": "^5.11.97",
+    "axios": "^0.24.0",
     "bcryptjs": "^2.4.3",
+    "cookie": "^0.4.1",
     "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
     "mongoose": "^6.0.12",
     "next": "12.0.3",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-paystack": "^3.0.5",
-    "sass": "^1.43.4"
+    "sass": "^1.43.4",
+    "swr": "^1.0.1"
   },
   "devDependencies": {
     "@types/react": "^17.0.34",
