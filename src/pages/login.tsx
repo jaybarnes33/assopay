@@ -3,7 +3,7 @@ import Image from "next/image";
 import styles from "../styles/Home.module.scss";
 import Button from "../components/core/Button";
 import router from "next/router";
-const login = () => {
+const Login = () => {
   const [show, setShow] = useState(false);
 
   const submitHandler = () => {};
@@ -44,4 +44,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;

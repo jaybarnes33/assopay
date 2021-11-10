@@ -3,7 +3,7 @@ import dbConnect from "@/lib/mongo";
 import User, { IUserSchema } from "@/models/User";
 import getUserID from "@/utils/get-userID";
 
-export default async (
+const handler = async (
   req: NextApiRequest,
   res: NextApiResponse<Omit<IUserSchema, "password">>
 ) => {
@@ -25,3 +25,5 @@ export default async (
     res.status(500).end("Something went wrong");
   }
 };
+
+export default handler;

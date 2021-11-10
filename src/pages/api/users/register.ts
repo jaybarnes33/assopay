@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "@/lib/mongo";
 import User from "@/models/User";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
     try {
       const { fName, lName, password, email, username, country } = req.body;
@@ -23,15 +23,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         });
 
         await user.save();
-        res
-          .status(201)
-          .json({
-            fName: user.Fname,
-            lName: user.Lname,
-            email: user.email,
-            username: user.username,
-            country: user.country,
-          });
+        res.status(201).json({
+          fName: user.Fname,
+          lName: user.Lname,
+          email: user.email,
+          username: user.username,
+          country: user.country,
+        });
       } else {
         res.status(403).json({ error: "User already exists" });
       }
@@ -40,3 +38,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
   }
 };
+
+export default handler;
