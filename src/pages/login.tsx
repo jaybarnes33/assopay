@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import Image from "next/image";
-import styles from "../styles/Forms.module.scss";
-import Button from "@/components/core/Button";
-import Left from "@/components/Forms/Left";
-import Alert from "@/components/core/Alert";
-import Link from "next/link";
-import Head from "next/head";
+import React, { useState } from "react"
+import Image from "next/image"
+import styles from "../styles/Forms.module.scss"
+import Button from "@/components/core/Button"
+import Left from "@/components/Forms/Left"
+import Alert from "@/components/core/Alert"
+import Link from "next/link"
+import Head from "next/head"
 const Login = () => {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false)
 
-  const submitHandler = () => {};
+  const submitHandler = () => {}
   return (
     <div className={styles.main}>
       <Head>
@@ -57,7 +57,7 @@ const Login = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login
