@@ -4,13 +4,12 @@ import Left from "@/components/Forms/Left";
 import Link from "next/link";
 import Head from "next/head";
 import React, { useState } from "react";
-
 import styles from "../styles/Forms.module.scss";
+import MultiStep from "@/components/Forms/MultiStep";
 
 const Signup = () => {
   const [show, setShow] = useState(false);
 
-  const submitHandler = () => {};
   return (
     <div className={styles.main}>
       <Head>
@@ -18,7 +17,6 @@ const Signup = () => {
       </Head>
       <Left />
       <div className={styles.right}>
-        {" "}
         <div className={styles.form_container}>
           <Alert variant="info">
             <p>
@@ -26,35 +24,21 @@ const Signup = () => {
               continue.
             </p>
           </Alert>
-
-          <form onSubmit={submitHandler} className={styles.form}>
-            <div className={styles.input}>
-              <input
-                type="text"
-                name="email"
-                placeholder="Please enter your student email"
-              />
+          <div>
+            <MultiStep maxSteps={5} />
+            <div className={styles.links}>
+              <Link href="/login">
+                <a className="link">Already have an account? Login </a>
+              </Link>
             </div>
-            <div className={styles.input}>
-              <input
-                type={!show ? "password" : "text"}
-                name="password"
-                placeholder="Please enter your password"
-              />
-              <br />
-              <br />
-              <small onClick={() => setShow(!show)}>Show Password</small>
-            </div>
-            <Link href="/login">
-              <small className="link">Already have an account? Login </small>
-            </Link>
-
-            <Button className="btn-primary btn-sm" type="submit">
-              Submit
-            </Button>
-          </form>
+          </div>
         </div>
       </div>
+      <style jsx>{`
+        .blue-bg {
+          background-color: #5578eb;
+        }
+      `}</style>
     </div>
   );
 };

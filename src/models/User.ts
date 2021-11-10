@@ -9,7 +9,6 @@ export interface IUserSchema extends Document {
   email: string;
   username: string;
   password: string;
-  background: string;
   otherNames: string;
   level: number;
 }
