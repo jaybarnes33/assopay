@@ -1,9 +1,15 @@
 import React from "react";
 
-const Button = ({ onClick, children, className }) => {
+interface IButtonProps {
+  children: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+  type?: "button" | "submit" | "reset";
+}
+const Button = ({ onClick, children, className, type }: IButtonProps) => {
   return (
     <>
-      <button className={className} onClick={onClick}>
+      <button className={className} onClick={onClick} type={type}>
         {children}
       </button>
       <style jsx>
@@ -12,9 +18,12 @@ const Button = ({ onClick, children, className }) => {
             border: none;
             min-width: 150px;
             padding: 0.5rem;
+            display: grid;
+            place-items: center;
             font-size: 1rem;
             border-radius: 5px;
             cursor: pointer;
+            text-align: center;
           }
 
           button:hover {
@@ -28,6 +37,16 @@ const Button = ({ onClick, children, className }) => {
           .btn-main {
             background-color: #134824;
             color: #f4f4f4;
+          }
+
+          .btn-light {
+            background-color: #f4f4f4;
+            color: #134824;
+          }
+
+          .btn-sm {
+            text-align: center;
+            min-width: 100px;
           }
         `}
       </style>

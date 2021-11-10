@@ -27,10 +27,13 @@ export default function Home() {
             >
               Pay Dues
             </Button>
-            <Button onClick={() => router.push("/dues")} className="btn-main">
+            <Button onClick={() => router.push("/login")} className="btn-main">
               Login
             </Button>
-            <Button onClick={() => router.push("/dues")} className="btn-main">
+            <Button
+              onClick={() => router.push("/register")}
+              className="btn-main"
+            >
               Register
             </Button>
           </div>
