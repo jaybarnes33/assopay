@@ -2,7 +2,11 @@
 
 :root {
   --primary-color: #134824;
+  --primary-color-focus: #28723f;
+  --primary-color-active: #399456;
   --light-color: #f4f4f4;
+  --light-color-focus: #d8d8d8;
+  --light-color-active: #ddd;
 
   --primary-font: "poppins", sans-serif;
   --secondary-font: "Noto Sans", sans-serif;

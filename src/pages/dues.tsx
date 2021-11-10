@@ -1,5 +1,5 @@
-const dues = () => {
+const Dues = () => {
   return <div>dues</div>
 }
 
-export default dues
+export default Dues

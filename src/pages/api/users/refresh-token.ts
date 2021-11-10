@@ -7,7 +7,7 @@ interface IData {
   accessToken: string;
 }
 
-export default async (
+const handler = async (
   req: NextApiRequest,
   res: NextApiResponse<IData | string>
 ) => {
@@ -33,3 +33,5 @@ export default async (
     }
   }
 };
+
+export default handler;

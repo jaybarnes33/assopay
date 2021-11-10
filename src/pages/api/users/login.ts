@@ -4,7 +4,7 @@ import User from "@/models/User";
 import { setTokenCookie } from "@/utils/auth-cookie";
 import { generateAccessToken, generateRefreshToken } from "@/utils/token";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
     try {
       const { username, password, remember } = req.body;
@@ -39,3 +39,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
   }
 };
+
+export default handler;
