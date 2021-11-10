@@ -12,9 +12,6 @@ export interface IUserSchema extends Document {
 }
 
 const userSchema = new mongoose.Schema<IUserSchema>({
-  image: {
-    type: String,
-  },
   fName: {
     type: String,
     required: true,
@@ -23,10 +20,8 @@ const userSchema = new mongoose.Schema<IUserSchema>({
     type: String,
     required: true,
   },
-  username: {
+  otherNames: {
     type: String,
-    unique: true,
-    required: true,
   },
   password: {
     type: String,
@@ -38,13 +33,6 @@ const userSchema = new mongoose.Schema<IUserSchema>({
     unique: true,
     required: true,
   },
-  country: {
-    type: String,
-    required: true,
-  },
-  background: {
-    type: String
-  }
 });
 
 userSchema.pre("save", async function (next) {
