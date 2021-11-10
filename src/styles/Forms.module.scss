@@ -1,0 +1,72 @@
+.main {
+  display: grid;
+  grid-template-columns: 55% 45%;
+
+  .left {
+    background: #1a1a1a50 url("/images/bg.jpg");
+    background-blend-mode: overlay;
+    min-height: 100vh;
+    background-size: cover;
+    display: grid;
+    padding: 10rem 2rem;
+    align-content: space-between;
+
+    p {
+      font-size: 2rem;
+      color: white;
+    }
+  }
+
+  .right {
+    background-color: #ffffff;
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+  }
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 100%;
+
+    .left {
+      display: none;
+    }
+
+    .right {
+      background: #1a1a1aa0 url("/images/umat_bg.jpg");
+      background-blend-mode: overlay;
+      background-size: cover;
+    }
+  }
+}
+.form_container {
+  padding: 3rem 0rem;
+
+  width: min(80%, 400px);
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  .form {
+    width: 100%;
+  }
+
+  button {
+    display: flex;
+    margin-left: auto;
+    font-weight: bold;
+  }
+  .input {
+    width: 100%;
+    margin: 1rem 0;
+    input {
+      width: 100%;
+      height: 2rem;
+    }
+  }
+
+  .input:focus-within {
+    border-color: #0abb87 !important;
+  }
+}

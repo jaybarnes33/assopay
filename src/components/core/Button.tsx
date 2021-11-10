@@ -44,6 +44,17 @@ const Button = ({ onClick, children, className, type }: IButtonProps) => {
             color: #134824;
           }
 
+          .btn-primary {
+            color: #fff;
+            background-color: #3699ff;
+            border-color: #3699ff;
+          }
+
+          .btn-outline-main {
+            border: 1px solid #134824;
+            background-color: white;
+          }
+
           .btn-sm {
             text-align: center;
             min-width: 100px;
