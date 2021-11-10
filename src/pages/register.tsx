@@ -5,7 +5,12 @@ import Link from "next/link"
 import Head from "next/head"
 import React, { useState } from "react"
 
+<<<<<<< HEAD
 import styles from "../styles/Forms.module.scss"
+=======
+import styles from "../styles/Forms.module.scss";
+import MultiStep from "@/components/Forms/MultiStep";
+>>>>>>> 027388c88a3120b8b4f51c8568c2774934bfce02
 
 const Signup = () => {
   const [show, setShow] = useState(false)
@@ -18,8 +23,8 @@ const Signup = () => {
       </Head>
       <Left />
       <div className={styles.right}>
-        {" "}
         <div className={styles.form_container}>
+<<<<<<< HEAD
           <Alert variant="info">
             <p>
               Provide valid <b className="bold-white">Credentials</b> to
@@ -59,6 +64,21 @@ const Signup = () => {
             <Button type="submit" className="blue-bg" color="light">
               Submit
             </Button>
+=======
+          <form onSubmit={submitHandler} className={styles.form}>
+            <Alert variant="info">
+              <p>
+                Provide valid <b className="bold-white">Credentials</b> to
+                continue.
+              </p>
+            </Alert>
+            <div>
+              <MultiStep maxSteps={4} />
+              <Link href="/login">
+                <small className="link">Already have an account? Login </small>
+              </Link>
+            </div>
+>>>>>>> 027388c88a3120b8b4f51c8568c2774934bfce02
           </form>
           <div className={styles.links}>
             <Link href="/forgot-password">
