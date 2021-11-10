@@ -5,15 +5,13 @@ async function dbConnect() {
     return;
   }
 
-  return await mongoose.connect(
+  await mongoose.connect(
     process.env.NODE_ENV === "production"
       ? process.env.ATLAS_URI
-      : process.env.MONGO_URI,
+      : process.env.MONGO_URL,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useFindAndModify: false,
-      useCreateIndex: true,
     } as ConnectOptions
   );
 }

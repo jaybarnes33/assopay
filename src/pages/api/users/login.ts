@@ -7,17 +7,19 @@ import { generateAccessToken, generateRefreshToken } from "@/utils/token";
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
     try {
-      const { username, password, remember } = req.body;
+      console.log(req.body);
+
+      const { email, password, remember } = req.body;
       await dbConnect();
 
       const user = await User.findOne({
-        $or: [{ username: username }],
+        email,
       });
 
       if (!user) {
         return res.status(400).json({
-          message: `User with username ${username} does not exist`,
-          key: "username",
+          message: `User with email ${email} does not exist`,
+          key: "email",
         });
       } else if (!(await user.matchPassword(password))) {
         return res
@@ -35,7 +37,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
       }
     } catch (error) {
-      res.status(500).end("Something went wrong");
+      console.log(error);
+      res.status(500).json("Something went wrong");
     }
   }
 };

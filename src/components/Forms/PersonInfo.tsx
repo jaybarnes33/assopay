@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "@/styles/Forms.module.scss";
 import { IHandlers, RegisterContext } from "./MultiStep";
 import Button from "../core/Button";
@@ -14,6 +14,17 @@ const UserInfo = ({ next }: IHandlers) => {
   const { data, setData } = useContext(RegisterContext);
   const [formData, setFormData] = useState<IStep1>();
 
+  useEffect(() => {
+    if (data?.fName) {
+      setFormData((prevState) => ({
+        ...prevState,
+        fName: data.fName,
+        lName: data.lName,
+        otherNames: data.otherNames,
+        gender: data.gender,
+      }));
+    }
+  }, []);
   const handleNext = () => {
     next();
     setData({ ...data, ...formData });
@@ -33,8 +44,11 @@ const UserInfo = ({ next }: IHandlers) => {
         <div className={styles.row}>
           {" "}
           <div className={styles.input}>
-            <label htmlFor="fName">First Name</label>
+            <label htmlFor="fName">
+              First Name <span>*</span>
+            </label>
             <input
+              required
               type="text"
               name="fName"
               placeholder="Enter first name"
@@ -43,8 +57,11 @@ const UserInfo = ({ next }: IHandlers) => {
             />
           </div>
           <div className={styles.input}>
-            <label htmlFor="lName">Last Name</label>
+            <label htmlFor="lName">
+              Last Name <span>*</span>
+            </label>
             <input
+              required
               type="text"
               name="lName"
               placeholder="Enter your last name"

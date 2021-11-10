@@ -1,15 +1,16 @@
 import { IHandlers, RegisterContext } from "./MultiStep";
 import styles from "@/styles/Forms.module.scss";
 import Button from "../core/Button";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import Alert from "../core/Alert";
 export interface IStep3 {
   level: number;
-  hall?: string;
+  hall: string;
 }
 const InstitutionalInfo = ({ next, previous }: IHandlers) => {
   const { data, setData } = useContext(RegisterContext);
   const [formData, setFormData] = useState<IStep3>();
-
+  const [message, setMessage] = useState("");
   const halls = [
     "Chamber of Mines Hall",
     "Kofi Tetteh Hall",
@@ -17,10 +18,23 @@ const InstitutionalInfo = ({ next, previous }: IHandlers) => {
     "Other",
   ];
 
+  useEffect(() => {
+    if (data.level) {
+      setFormData((prevState) => ({
+        ...prevState,
+        level: data.level,
+        hall: data.hall,
+      }));
+    }
+  }, []);
   const levels = [100, 200, 300, 400];
   const handleNext = () => {
     setData({ ...data, ...formData });
-    next();
+    if (formData.level && formData?.hall) {
+      next();
+    } else {
+      setMessage("Fill all inputs with label *");
+    }
   };
 
   const handleChange = (e: any) => {
@@ -38,12 +52,15 @@ const InstitutionalInfo = ({ next, previous }: IHandlers) => {
   return (
     <div className={styles.inner}>
       <div className={styles.input}>
-        <label htmlFor="hall">Hall</label>
+        <label htmlFor="hall">
+          Hall <span>*</span>
+        </label>
         <br />
         <select
           value={formData?.hall}
           className={styles.input}
           name="hall"
+          required
           onChange={handleChange}
         >
           <option>Select Hall</option>
@@ -55,11 +72,15 @@ const InstitutionalInfo = ({ next, previous }: IHandlers) => {
         </select>
       </div>
       <div className={styles.input}>
-        <label htmlFor="level">Level</label>
+        <label htmlFor="level">
+          Level <span>*</span>
+        </label>
         <select
+          name="level"
           className={styles.input}
           value={formData?.level}
           onChange={handleChange}
+          required
         >
           <option>Select Level</option>
           {levels.map((level, index) => (
@@ -77,6 +98,7 @@ const InstitutionalInfo = ({ next, previous }: IHandlers) => {
           Next
         </Button>
       </div>
+      {message && <Alert variant="danger">{message}</Alert>}
     </div>
   );
 };

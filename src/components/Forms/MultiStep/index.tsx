@@ -6,6 +6,9 @@ import LoginInfo, { IStep2 } from "../LoginInfo";
 import PersonalInfo, { IStep1 } from "../PersonInfo";
 import styles from "@/styles/Forms.module.scss";
 import Button from "@/components/core/Button";
+import { setAccessToken } from "misc/token";
+import axios from "axios";
+import router from "next/router";
 export interface IHandlers {
   next?: () => void;
   previous?: () => void;
@@ -20,11 +23,27 @@ export const RegisterContext = React.createContext<
 const MultiStep = ({ maxSteps }) => {
   const [data, setData] = useState<IRegisterProps>();
   const [step, setStep] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   let currentStep: ReactNode;
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(data);
+
+    try {
+      setLoading(true);
+      const { data: res } = await axios.post("/api/users/register", {
+        ...data,
+      });
+      if (res.refreshToken) {
+        sessionStorage.setItem("token", res.refreshToken);
+      }
+
+      setAccessToken(res.accessToken);
+      router.push("/dues");
+    } catch (error) {
+      setError(error.response.data.message);
+    }
   };
   const nextStep = () => {
     setStep(step + 1);
