@@ -1,12 +1,13 @@
-import React, { useState } from "react";
-import Image from "next/image";
-import styles from "../styles/Home.module.scss";
-import Button from "../components/core/Button";
-import router from "next/router";
-const login = () => {
-  const [show, setShow] = useState(false);
+import React, { useState } from "react"
+import Image from "next/image"
+import styles from "../styles/Home.module.scss"
+import Button from "../components/core/Button"
+import router from "next/router"
 
-  const submitHandler = () => {};
+const Login = () => {
+  const [show, setShow] = useState(false)
+
+  const submitHandler = () => {}
   return (
     <div className={styles.main}>
       <Button
@@ -41,7 +42,7 @@ const login = () => {
         </form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default login;
+export default Login

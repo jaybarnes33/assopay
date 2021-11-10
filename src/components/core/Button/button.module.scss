@@ -1,0 +1,82 @@
+.button {
+  border: none;
+  min-width: 150px;
+  padding: 0.5rem;
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color ease-out 100ms;
+
+  &-main {
+    &-primary {
+      background-color: var(--primary-color);
+      color: var(--light-color);
+
+      &:hover,
+      &:focus {
+        background-color: transparentize(#134824, 0.8);
+      }
+    }
+
+    &-light {
+      background-color: var(--light-color);
+      color: var(--primary-color);
+
+      &:hover,
+      &:focus {
+        background-color: #d8d8d8;
+      }
+    }
+  }
+
+  &-outlined {
+    background-color: transparent;
+
+    &-primary {
+      color: var(--primary-color);
+      border: 2px solid var(--primary-color);
+
+      &:hover,
+      &:focus {
+        background-color: #1348245a;
+      }
+    }
+
+    &-light {
+      color: var(--light-color);
+      border: 2px solid var(--light-color);
+
+      &:hover,
+      &:focus {
+        background-color: #fff2;
+      }
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid lighten(#134824, 50);
+    outline-offset: 2px;
+  }
+}
+// button:hover,
+// button:active {
+//   outline: none;
+// }
+
+// .btn-main {
+//   background-color: #134824;
+//   color: #f4f4f4;
+// }
+
+// .btn-light {
+//   background-color: #f4f4f4;
+//   color: #134824;
+// }
+
+// .btn-sm {
+//   text-align: center;
+//   min-width: 100px;
+// }

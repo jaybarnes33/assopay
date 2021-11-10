@@ -1,7 +1,5 @@
-import React from "react";
-
 const dues = () => {
-  return <div>dues</div>;
-};
+  return <div>dues</div>
+}
 
-export default dues;
+export default dues

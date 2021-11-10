@@ -80,6 +80,16 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@fontsource/noto-sans@^4.5.1":
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/@fontsource/noto-sans/-/noto-sans-4.5.1.tgz#b0674a0b903adccb2cdafcc61b7a7f48805b826f"
+  integrity sha512-2Piw8UHz4XNomZgIUdurkv7cLcDOQvzZ8lagHF+Q7faYTukVCXZhdRLcVJ7qXMcsgYxg0wYYUYrF5sdnh6CzSQ==
+
+"@fontsource/poppins@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@fontsource/poppins/-/poppins-4.5.0.tgz#a419697b85864afbf8363f5c247b1e9d1f117564"
+  integrity sha512-RqgMIQqKHWNH3IUj+a0MAhlb4g5fftsXRTJ2bauefBmfM8Ja5q+qQZjKwyB/iCc+paJD320zFnLJ8G+y1ZyemQ==
+
 "@hapi/accept@5.0.2":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/@hapi/accept/-/accept-5.0.2.tgz#ab7043b037e68b722f93f376afb05e85c0699523"

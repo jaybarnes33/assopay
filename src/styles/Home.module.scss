@@ -8,9 +8,8 @@
   align-items: center;
 
   .inner_grid {
-    display: grid;
-    place-items: center;
-    gap: 2rem;
+    display: flex;
+    flex-direction: column;
 
     .text {
       color: #eaeaea;
