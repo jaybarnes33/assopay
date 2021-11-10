@@ -8,7 +8,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fontsource/montserrat": "^4.5.1",
     "@fontsource/noto-sans": "^4.5.1",
+    "@fontsource/open-sans": "^4.5.2",
     "@fontsource/poppins": "^4.5.0",
     "axios": "^0.24.0",
     "bcryptjs": "^2.4.3",

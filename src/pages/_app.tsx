@@ -1,4 +1,4 @@
-import "@fontsource/noto-sans/700.css"
+import "@fontsource/montserrat/700.css"
 import "@fontsource/poppins/400.css"
 import "../styles/globals.css"
 
