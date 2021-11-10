@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { ConnectOptions } from "mongoose";
 
 async function dbConnect() {
   if (mongoose.connection.readyState >= 1) {
@@ -14,7 +14,7 @@ async function dbConnect() {
       useUnifiedTopology: true,
       useFindAndModify: false,
       useCreateIndex: true,
-    }
+    } as ConnectOptions
   );
 }
 
