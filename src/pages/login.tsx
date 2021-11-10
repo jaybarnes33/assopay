@@ -43,17 +43,23 @@ const Login = () => {
                 <br />
                 <br />
               </div>
-              <small onClick={() => setShow(!show)}>Show Password</small>
-              <Link href="/register">
-                <small className="link">
-                  Don&apos;t have an account? Register{" "}
+              <div className={styles.links}>
+                {" "}
+                <small onClick={() => setShow(!show)}>
+                  <i className={`bi bi-${!show ? "eye" : "eye-slash"}`} />
                 </small>
-              </Link>
+                <Link href="/register">
+                  <small className="link">
+                    Don&apos;t have an account? Register{" "}
+                  </small>
+                </Link>
+              </div>
               <Button className="btn-primary btn-sm" type="submit">
                 Submit
               </Button>
             </div>
           </form>
+          <div></div>
         </div>
       </div>
     </div>
