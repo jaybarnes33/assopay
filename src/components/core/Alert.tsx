@@ -16,6 +16,7 @@ const Alert = ({ variant, children }: AlertProps) => {
             width: 100%;
             display: flex;
             justify-content: center;
+            padding: 0.2rem;
           }
 
           .alert-text {
@@ -35,6 +36,16 @@ const Alert = ({ variant, children }: AlertProps) => {
             border-radius: 4px 4px 0 0;
             text-align: center;
             color: #f4f4f4;
+          }
+
+          .danger {
+            margin: 1rem 0;
+            color: red;
+          }
+
+          .danger-bg {
+            background-color: tomato;
+            color: white;
           }
 
           @media screen and (max-width: 1024px) {

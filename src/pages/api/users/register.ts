@@ -4,12 +4,25 @@ import User from "@/models/User";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
+    if (!req.body.email.startsWith("ce")) {
+      return res.status(400).json({ message: "Invalid Credentials" });
+    }
     try {
-      const { fName, lName, password, email, username, country } = req.body;
+      const {
+        fName,
+        lName,
+        password,
+        email,
+        otherNames,
+        level,
+        hall,
+        phone,
+        gender,
+      } = req.body;
       await dbConnect();
 
       const userExists = await User.findOne({
-        $or: [{ username: username }, { email: email }],
+        email,
       });
 
       if (!userExists) {
@@ -18,8 +31,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           lName,
           password,
           email,
-          username,
-          country,
+          otherNames,
+          level,
+          hall,
+          phone,
+          gender,
         });
 
         await user.save();
