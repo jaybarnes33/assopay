@@ -9,7 +9,7 @@ export interface IUserSchema extends Document {
   email: string;
   username: string;
   password: string;
-  socials?: [string];
+  socials?: Record<string, string>[];
   otherNames: string;
   level: number;
 }
@@ -44,7 +44,7 @@ const userSchema = new mongoose.Schema<IUserSchema>({
     type: String,
   },
   socials: {
-    type: [String],
+    type: [],
   },
   phone: { type: String },
 });
