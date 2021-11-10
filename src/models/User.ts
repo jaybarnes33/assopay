@@ -2,13 +2,16 @@ import mongoose, { Document } from "mongoose";
 import bcrypt from "bcryptjs";
 
 export interface IUserSchema extends Document {
+  gender?: string;
+  phone?: string;
   fName: string;
   lName: string;
   email: string;
   username: string;
   password: string;
-  country: string;
   background: string;
+  otherNames: string;
+  level: number;
 }
 
 const userSchema = new mongoose.Schema<IUserSchema>({
@@ -33,6 +36,14 @@ const userSchema = new mongoose.Schema<IUserSchema>({
     unique: true,
     required: true,
   },
+  level: {
+    type: Number,
+    required: true,
+  },
+  gender: {
+    type: String,
+  },
+  phone: { type: String },
 });
 
 userSchema.pre("save", async function (next) {
