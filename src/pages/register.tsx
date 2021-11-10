@@ -1,16 +1,16 @@
-import Alert from "@/components/core/Alert";
-import Button from "@/components/core/Button";
-import Left from "@/components/Forms/Left";
-import Link from "next/link";
-import Head from "next/head";
-import React, { useState } from "react";
+import Alert from "@/components/core/Alert"
+import Button from "@/components/core/Button"
+import Left from "@/components/Forms/Left"
+import Link from "next/link"
+import Head from "next/head"
+import React, { useState } from "react"
 
-import styles from "../styles/Forms.module.scss";
+import styles from "../styles/Forms.module.scss"
 
 const Signup = () => {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false)
 
-  const submitHandler = () => {};
+  const submitHandler = () => {}
   return (
     <div className={styles.main}>
       <Head>
@@ -45,7 +45,7 @@ const Signup = () => {
               <br />
               <small onClick={() => setShow(!show)}>Show Password</small>
             </div>
-            <Link href="/login">
+            <Link href="/login" passHref>
               <small className="link">Already have an account? Login </small>
             </Link>
 
@@ -56,7 +56,7 @@ const Signup = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Signup;
+export default Signup
