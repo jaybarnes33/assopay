@@ -1,15 +1,15 @@
-import React, { useState } from "react"
-import Image from "next/image"
-import styles from "../styles/Forms.module.scss"
-import Button from "@/components/core/Button"
-import Left from "@/components/Forms/Left"
-import Alert from "@/components/core/Alert"
-import Link from "next/link"
-import Head from "next/head"
+import React, { useState } from "react";
+import Image from "next/image";
+import styles from "../styles/Forms.module.scss";
+import Button from "@/components/core/Button";
+import Left from "@/components/Forms/Left";
+import Alert from "@/components/core/Alert";
+import Link from "next/link";
+import Head from "next/head";
 const Login = () => {
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
 
-  const submitHandler = () => {}
+  const submitHandler = () => {};
   return (
     <div className={styles.main}>
       <Head>
@@ -43,21 +43,27 @@ const Login = () => {
                 <br />
                 <br />
               </div>
-              <small onClick={() => setShow(!show)}>Show Password</small>
-              <Link href="/register">
-                <small className="link">
-                  Don&apos;t have an account? Register{" "}
+              <div className={styles.links}>
+                {" "}
+                <small onClick={() => setShow(!show)}>
+                  <i className={`bi bi-${!show ? "eye" : "eye-slash"}`} />
                 </small>
-              </Link>
+                <Link href="/register">
+                  <small className="link">
+                    Don&apos;t have an account? Register{" "}
+                  </small>
+                </Link>
+              </div>
               <Button className="btn-primary btn-sm" type="submit">
                 Submit
               </Button>
             </div>
           </form>
+          <div></div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

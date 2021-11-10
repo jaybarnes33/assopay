@@ -30,56 +30,58 @@ const UserInfo = ({ next }: IHandlers) => {
   return (
     <>
       <div className={styles.inner}>
-        <div className={styles.input}>
-          <label htmlFor="fName">First Name</label>
-          <input
-            type="text"
-            name="fName"
-            placeholder="Enter first name"
-            value={formData?.fName}
-            onChange={handleChange}
-          />
+        <div className={styles.row}>
+          {" "}
+          <div className={styles.input}>
+            <label htmlFor="fName">First Name</label>
+            <input
+              type="text"
+              name="fName"
+              placeholder="Enter first name"
+              value={formData?.fName}
+              onChange={handleChange}
+            />
+          </div>
+          <div className={styles.input}>
+            <label htmlFor="lName">Last Name</label>
+            <input
+              type="text"
+              name="lName"
+              placeholder="Enter your last name"
+              value={formData?.lName}
+              onChange={handleChange}
+            />
+          </div>
         </div>
-        <div className={styles.input}>
-          <label htmlFor="lName">Last Name</label>
-          <input
-            type="text"
-            name="lName"
-            placeholder="Enter your last name"
-            value={formData?.lName}
-            onChange={handleChange}
-          />
-        </div>
-        <div className={styles.input}>
-          <label htmlFor="otherNames">Other Names</label>
-          <input
-            type="text"
-            name="otherNames"
-            placeholder="Enter other names"
-            value={formData?.otherNames}
-            onChange={handleChange}
-          />
-        </div>
-        <div className={styles.input}>
-          <label htmlFor="gender">Gender</label>
-          <select
-            className={styles.input}
-            name="gender"
-            value={formData?.gender}
-            onChange={handleChange}
-          >
-            <option value="">Select Gender</option>
-            <option value="female">Female</option>
-            <option value="male">Male</option>
-          </select>
+        <div className={styles.row}>
+          <div className={styles.input}>
+            <label htmlFor="otherNames">Other Names</label>
+            <input
+              type="text"
+              name="otherNames"
+              placeholder="Enter other names"
+              value={formData?.otherNames}
+              onChange={handleChange}
+            />
+          </div>
+          <div className={styles.input}>
+            <label htmlFor="gender">Gender</label>
+            <select
+              className={styles.input}
+              name="gender"
+              value={formData?.gender}
+              onChange={handleChange}
+            >
+              <option value="">Select Gender</option>
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+            </select>
+          </div>
         </div>
       </div>
+
       <div className={styles.buttons}>
-        <Button
-          className="btn-primary btn-sm"
-          type="button"
-          onClick={handleNext}
-        >
+        <Button className="btn-sm" type="button" onClick={handleNext}>
           Next
         </Button>
       </div>

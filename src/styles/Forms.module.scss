@@ -39,11 +39,7 @@
 
     .form_container {
       padding: 1rem;
-      min-height: 70vh;
-      background-color: #ffffffee;
-      .buttons {
-        bottom: 1rem;
-      }
+      // background-color: #ffffffee;
     }
   }
 }
@@ -53,6 +49,7 @@
   width: min(80%, 400px);
   border-radius: 3px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
@@ -61,34 +58,125 @@
     width: 100%;
   }
 
+  button[type="submit"]:not(:disabled) {
+    margin: 20px auto 16px;
+    width: 100%;
+    color: white;
+    background-color: #5578eb;
+
+    &:hover,
+    &:focus {
+      background-color: darken(#5578eb, 10);
+    }
+  }
   .inner {
     width: 100%;
     display: grid;
-    grid-template-columns: 100%;
-    gap: 2rem;
+
+    // two columns
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
 
     @media screen and (max-width: 768px) {
       grid-template-columns: 100%;
+
+      .row {
+        gap: 0;
+        flex-wrap: wrap;
+      }
     }
   }
+
   .input {
     width: 100%;
-    height: 2rem;
-    input {
+    margin: 0.5rem 0;
+    color: var(--light-color);
+
+    & > div {
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        background-color: transparent;
+        font-family: var(--primary-font);
+        font-size: 1rem;
+        margin-top: 4px;
+        border: none;
+        color: var(--light-color);
+        cursor: pointer;
+      }
+    }
+
+    label {
+      display: inline-block;
+    }
+
+    input,
+    select {
       width: 100%;
-      height: 100%;
+      padding: 0.8rem;
+      border-radius: 5px;
+      border: 1px solid #c0c0c0;
+      font-family: var(--primary-font);
+      font-size: 1rem;
+      color: #212121;
+    }
+
+    .input:focus-within,
+    .select:focus-within {
+      border-color: #0abb87 !important;
+    }
+
+    @media (min-width: 768px) {
+      label {
+        color: #212121;
+      }
+
+      & > div {
+        button[type="button"] {
+          color: #212121;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+.links {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+
+  a {
+    color: #c4c4c4;
+
+    &:last-child {
+      text-align: right;
     }
   }
 
-  .input:focus-within {
-    border-color: #0abb87 !important;
-  }
+  @media (min-width: 768px) {
+    a {
+      color: #212121;
 
-  .buttons {
-    position: absolute;
-    bottom: -1rem;
-    display: flex;
-    justify-content: space-evenly;
-    width: 100%;
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+.buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  width: 100%;
+
+  button {
+    max-width: 50px !important;
   }
 }
