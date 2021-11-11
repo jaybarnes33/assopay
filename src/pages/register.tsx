@@ -1,17 +1,11 @@
 import styles from "../styles/Forms.module.scss";
 import MultiStep from "@/components/Forms/MultiStep";
 import Alert from "@/components/core/Alert";
-import Button from "@/components/core/Button";
 import Left from "@/components/Forms/Left";
 import Link from "next/link";
 import Head from "next/head";
-import React, { useState } from "react";
 
-const Signup = () => {
-  const [show, setShow] = useState(false);
-
-  const submitHandler = () => {};
-
+const SignUp = () => {
   return (
     <div className={styles.main}>
       <Head>
@@ -46,4 +40,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignUp;

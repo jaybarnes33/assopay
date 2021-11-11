@@ -1,5 +1,5 @@
 import { SetableContext } from "@/interfaces/setable-context";
-import React, { ReactNode, useState } from "react";
+import { createContext, useState } from "react";
 import ContactInfo, { IStep4 } from "../ContactInfo";
 import InstitutionalInfo, { IStep3 } from "../InstitutionalInfo";
 import LoginInfo, { IStep2 } from "../LoginInfo";
@@ -10,7 +10,15 @@ import { setAccessToken } from "@/misc/token";
 import axios, { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import { FormikHelpers, FormikProps, useFormik } from "formik";
-import { initialValues, TValues } from "./form-config";
+import {
+  contactInfo,
+  initialValues,
+  institutionalInfo,
+  loginInfo,
+  personalInfo,
+  TValues,
+  validationSchema,
+} from "./form-config";
 export interface IHandlers {
   next?: () => void;
   previous?: () => void;
@@ -18,9 +26,9 @@ export interface IHandlers {
 
 export type IRegisterProps = Partial<IStep1 & IStep2 & IStep3 & IStep4>;
 
-export const RegisterContext = React.createContext<
-  SetableContext<IRegisterProps>
->({});
+export const RegisterContext = createContext<SetableContext<IRegisterProps>>(
+  {}
+);
 
 export type TFormik = Omit<FormikProps<TValues>, "handleSubmit">;
 
@@ -42,7 +50,6 @@ const CurrentStep = ({
 };
 
 const MultiStep = () => {
-  const [data, setData] = useState<IRegisterProps>();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -74,27 +81,39 @@ const MultiStep = () => {
     }
   };
 
+  const { handleSubmit, ...formik } = useFormik<TValues>({
+    initialValues,
+    validationSchema,
+    validateOnMount: true,
+    onSubmit: submitHandler,
+  });
+
   const nextStep = () => {
-    setStep(step + 1);
+    const steps = {
+      1: personalInfo,
+      2: loginInfo,
+      3: institutionalInfo,
+      4: contactInfo,
+    };
+
+    const fields = Object.keys(steps[step as 1 | 2 | 3 | 4]);
+
+    fields.forEach(field => formik.setFieldTouched(field));
+    const error = Object.keys(formik.errors).some(field =>
+      fields.includes(field)
+    );
+
+    !error && setStep(step + 1);
   };
 
   const prevStep = () => {
     setStep(step > 1 ? step - 1 : 1);
   };
 
-  const { handleSubmit, ...formik } = useFormik<TValues>({
-    initialValues,
-    onSubmit: submitHandler,
-  });
-
   return (
     <>
       <form onSubmit={handleSubmit} className={styles.form}>
         <CurrentStep activeStep={step} formik={formik} />
-        {step === 5 && (
-          <p>Thanks for filling this form, press submit to continue</p>
-        )}
-
         <div className={styles.buttons}>
           <Button color="light" onClick={prevStep} disabled={step === 1}>
             Back
@@ -105,7 +124,7 @@ const MultiStep = () => {
               disabled={step < 4}
               onClick={() => console.log("clicked")}
             >
-              Submit
+              Sign up
             </Button>
           ) : (
             <Button onClick={nextStep}>Next</Button>

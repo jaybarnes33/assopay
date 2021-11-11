@@ -96,6 +96,10 @@
     margin: 0.5rem 0;
     color: var(--primary-color);
 
+    small {
+      color: red;
+    }
+
     & > div {
       display: flex;
       justify-content: flex-end;

@@ -1,12 +1,12 @@
-import { TFormik } from "./MultiStep"
-import styles from "@/styles/Forms.module.scss"
+import { TFormik } from "./MultiStep";
+import styles from "@/styles/Forms.module.scss";
 
 export interface IStep4 {
-  phone?: string
+  phone?: string;
 }
 
 const ContactInfo = ({ formik }: { formik: TFormik }) => {
-  const { values, handleChange } = formik
+  const { values, errors, touched, handleChange } = formik;
 
   return (
     <div className={styles.inner}>
@@ -22,12 +22,16 @@ const ContactInfo = ({ formik }: { formik: TFormik }) => {
             placeholder="Ex. 0240000000"
             value={values.phone}
             onChange={handleChange}
+            aria-describedby="phone-message"
             required
           />
+          {errors.phone && touched.phone && (
+            <small id="phone-message">{errors.phone}</small>
+          )}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ContactInfo
+export default ContactInfo;
