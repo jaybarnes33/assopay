@@ -9,6 +9,7 @@ import Button from "@/components/core/Button";
 import { setAccessToken } from "misc/token";
 import axios from "axios";
 import router from "next/router";
+import Alert from "@/components/core/Alert";
 export interface IHandlers {
   next?: () => void;
   previous?: () => void;
@@ -31,6 +32,7 @@ const MultiStep = ({ maxSteps }) => {
     e.preventDefault();
 
     try {
+      console.log(data);
       setLoading(true);
       const { data: res } = await axios.post("/api/users/register", {
         ...data,
@@ -42,6 +44,7 @@ const MultiStep = ({ maxSteps }) => {
       setAccessToken(res.accessToken);
       router.push("/dues");
     } catch (error) {
+      console.log(error);
       setError(error.response.data.message);
     }
   };
@@ -81,6 +84,7 @@ const MultiStep = ({ maxSteps }) => {
 
   return (
     <RegisterContext.Provider value={{ data, setData }}>
+      {error && <Alert variant="danger-bg">{error}</Alert>}
       <form onSubmit={submitHandler} className={styles.form}>
         {currentStep}
         {step === 5 && (
