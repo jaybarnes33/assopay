@@ -2,18 +2,23 @@ import mongoose, { ConnectOptions } from "mongoose";
 
 async function dbConnect() {
   if (mongoose.connection.readyState >= 1) {
+    // console.log("MongoDB connected: " + mongoose.connection.host);
     return;
   }
-
-  await mongoose.connect(
-    process.env.NODE_ENV === "production"
-      ? process.env.ATLAS_URI
-      : process.env.MONGO_URL,
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    } as ConnectOptions
-  );
+  try {
+    const conn = await mongoose.connect(
+      (process.env.NODE_ENV || process.env.VERCEL_ENV) === "production"
+        ? process.env.ATLAS_URI
+        : process.env.MONGO_URI,
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      } as ConnectOptions
+    );
+    // console.log("MongoDB connected: " + conn.connection.host);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export default dbConnect;

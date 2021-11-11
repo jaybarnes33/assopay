@@ -24,7 +24,7 @@ const UserInfo = ({ next }: IHandlers) => {
         gender: data.gender,
       }));
     }
-  }, []);
+  }, [data]);
   const handleNext = () => {
     next();
     setData({ ...data, ...formData });
@@ -57,6 +57,18 @@ const UserInfo = ({ next }: IHandlers) => {
             />
           </div>
           <div className={styles.input}>
+            <label htmlFor="otherNames">Other Names</label>
+            <input
+              type="text"
+              name="otherNames"
+              placeholder="Enter other names"
+              value={formData?.otherNames}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className={styles.row}>
+          <div className={styles.input}>
             <label htmlFor="lName">
               Last Name <span>*</span>
             </label>
@@ -69,18 +81,7 @@ const UserInfo = ({ next }: IHandlers) => {
               onChange={handleChange}
             />
           </div>
-        </div>
-        <div className={styles.row}>
-          <div className={styles.input}>
-            <label htmlFor="otherNames">Other Names</label>
-            <input
-              type="text"
-              name="otherNames"
-              placeholder="Enter other names"
-              value={formData?.otherNames}
-              onChange={handleChange}
-            />
-          </div>
+
           <div className={styles.input}>
             <label htmlFor="gender">Gender</label>
             <select
