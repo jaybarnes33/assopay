@@ -70,18 +70,10 @@ const InstitutionalInfo = ({ next, previous }: IHandlers) => {
         </select>
       </div>
       <div className={styles.buttons}>
-        <Button
-          className="btn-outline-primary btn-sm"
-          type="button"
-          onClick={handlePrev}
-        >
+        <Button type="button" onClick={handlePrev}>
           Back
         </Button>
-        <Button
-          className="btn-primary btn-sm"
-          type="button"
-          onClick={handleNext}
-        >
+        <Button type="button" onClick={handleNext}>
           Next
         </Button>
       </div>

@@ -28,9 +28,7 @@ a {
 
 .link {
   cursor: pointer;
-  position: absolute;
-  right: 0;
-  bottom: -5rem;
+
   &:hover {
     color: blue;
   }

@@ -4,7 +4,8 @@ import ContactInfo, { IStep4 } from "../ContactInfo";
 import InstitutionalInfo, { IStep3 } from "../InstitutionalInfo";
 import LoginInfo, { IStep2 } from "../LoginInfo";
 import PersonalInfo, { IStep1 } from "../PersonInfo";
-
+import styles from "@/styles/Forms.module.scss";
+import Button from "@/components/core/Button";
 export interface IHandlers {
   next?: () => void;
   previous?: () => void;
@@ -21,6 +22,10 @@ const MultiStep = ({ maxSteps }) => {
   const [step, setStep] = useState(1);
   let currentStep: ReactNode;
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+    console.log(data);
+  };
   const nextStep = () => {
     setStep(step + 1);
   };
@@ -47,12 +52,36 @@ const MultiStep = ({ maxSteps }) => {
       );
       break;
     case 4:
-      currentStep = <ContactInfo previous={() => prevStep()} />;
+      currentStep = (
+        <ContactInfo previous={() => prevStep()} next={() => nextStep()} />
+      );
+      break;
+    default:
+      break;
   }
 
   return (
     <RegisterContext.Provider value={{ data, setData }}>
-      {currentStep}
+      <form onSubmit={submitHandler} className={styles.form}>
+        {currentStep}
+        {step === 5 && (
+          <>
+            Thanks for filling this form, press submit to continue
+            <div className={styles.buttons}>
+              <Button
+                variant="outlined"
+                className="btn-outline-primary btn-sm"
+                onClick={() => setStep(4)}
+              >
+                Back
+              </Button>
+              <Button variant="outlined" className="btn-outline-primary btn-sm">
+                Submit
+              </Button>
+            </div>
+          </>
+        )}
+      </form>
     </RegisterContext.Provider>
   );
 };

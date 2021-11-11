@@ -25,39 +25,48 @@ const Login = () => {
             </p>
           </Alert>
           <form onSubmit={submitHandler} className={styles.form}>
-            <div className={styles.input}>
-              <label htmlFor="email">Student Email</label>
-              <input
-                id="email"
-                type="email"
-                name="email"
-                placeholder="Ex. ce-jdoe6020@st.umat.edu.gh"
-              />
-            </div>
-            <div className={styles.input}>
-              <label htmlFor="password">Password</label>
-              <input
-                id="password"
-                type={!show ? "password" : "text"}
-                name="password"
-                autoComplete="current-password"
-              />
-              <div>
-                <button type="button" onClick={() => setShow(!show)}>
-                  Show Password
-                </button>
+            <Alert variant="info">
+              <p>
+                Provide valid <b className="bold-white">student email</b> and
+                <b className="bold-white"> password</b> to continue.
+              </p>
+            </Alert>
+            <div className={styles.inner}>
+              <div className={styles.input}>
+                <label htmlFor="email">Student Email</label>
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="Ex. ce-jdoe6020@st.umat.edu.gh"
+                />
               </div>
+              <div className={styles.input}>
+                <label htmlFor="password">Password</label>
+                <input
+                  id="password"
+                  type={!show ? "password" : "text"}
+                  name="password"
+                  autoComplete="current-password"
+                />
+              </div>
+              <div className={styles.links}>
+                {" "}
+                <small onClick={() => setShow(!show)}>
+                  <i className={`bi bi-${!show ? "eye" : "eye-slash"}`} />
+                </small>
+                <Link href="/register">
+                  <small className="link">
+                    Don&apos;t have an account? Register{" "}
+                  </small>
+                </Link>
+              </div>
+              <Button className="btn-primary btn-sm" type="submit">
+                Submit
+              </Button>
             </div>
-
-            <Button className="btn-primary btn-sm" type="submit">
-              Submit
-            </Button>
           </form>
-          <div>
-            <Link href="/register" passHref>
-              <a className="link">Don&apos;t have an account? Register </a>
-            </Link>
-          </div>
+          <div></div>
         </div>
       </div>
     </div>

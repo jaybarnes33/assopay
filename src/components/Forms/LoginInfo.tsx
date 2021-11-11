@@ -34,6 +34,7 @@ const LoginInfo = ({ next, previous }: IHandlers) => {
         <div className={styles.input}>
           <label htmlFor="email">Email</label>
           <input
+            name="email"
             type="email"
             placeholder="Enter email"
             onChange={handleChange}
