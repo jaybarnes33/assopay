@@ -1,8 +1,8 @@
-import Head from "next/head"
-import Link from "next/link"
-import buttonStyles from "@/components/core/Button/button.module.scss"
-import styles from "../styles/Home.module.scss"
-import { joinClasses } from "@/utils/join-classes"
+import Head from "next/head";
+import Link from "next/link";
+import buttonStyles from "@/components/core/Button/button.module.scss";
+import styles from "../styles/Home.module.scss";
+import { joinClasses } from "@/utils/join-classes";
 
 export default function Home() {
   return (
@@ -20,16 +20,6 @@ export default function Home() {
         <section id="hero" className={styles.inner_grid}>
           <h1 className={styles.text}>Welcome to the ACSES - UMaT portal</h1>
           <div className={styles.buttons}>
-            <Link href="/dues">
-              <a
-                className={joinClasses(
-                  buttonStyles.button,
-                  buttonStyles["button-main-light"]
-                )}
-              >
-                Pay Dues
-              </a>
-            </Link>
             <Link href="/register">
               <a
                 className={joinClasses(
@@ -40,6 +30,16 @@ export default function Home() {
                 Register
               </a>
             </Link>
+            <Link href="/dues">
+              <a
+                className={joinClasses(
+                  buttonStyles.button,
+                  buttonStyles["button-main-light"]
+                )}
+              >
+                Pay Dues
+              </a>
+            </Link>
           </div>
         </section>
       </main>
@@ -48,5 +48,5 @@ export default function Home() {
         &copy; Copyright - {new Date().getFullYear()}
       </footer>
     </>
-  )
+  );
 }
