@@ -5,9 +5,11 @@ export interface IPayload {
 }
 
 export const generateAccessToken = (payload: IPayload) => {
-  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "10m" });
+  return jwt.sign(payload, process.env.JWT_SECRET || "", { expiresIn: "10m" });
 };
 
 export const generateRefreshToken = (payload: IPayload) => {
-  return jwt.sign(payload, process.env.REFRESH_SECRET, { expiresIn: "7d" });
+  return jwt.sign(payload, process.env.REFRESH_SECRET || "", {
+    expiresIn: "7d",
+  });
 };

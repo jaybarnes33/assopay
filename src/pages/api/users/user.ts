@@ -10,7 +10,7 @@ const handler = async (
   try {
     await dbConnect();
 
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req.headers.authorization?.split(" ")[1] || "";
 
     const userID = getUserID(token);
     if (!userID) return res.status(401).end("Unauthorized!");

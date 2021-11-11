@@ -4,8 +4,8 @@ import bcrypt from "bcryptjs";
 export interface IUserSchema extends Document {
   gender?: string;
   phone?: string;
-  fName: string;
-  lName: string;
+  firstName: string;
+  lastName: string;
   email: string;
   hall?: string;
   username: string;
@@ -15,11 +15,11 @@ export interface IUserSchema extends Document {
 }
 
 const userSchema = new mongoose.Schema<IUserSchema>({
-  fName: {
+  firstName: {
     type: String,
     required: true,
   },
-  lName: {
+  lastName: {
     type: String,
     required: true,
   },

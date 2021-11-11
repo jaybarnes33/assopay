@@ -9,8 +9,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
     try {
       const {
-        fName,
-        lName,
+        firstName,
+        lastName,
         password,
         email,
         otherNames,
@@ -27,8 +27,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       if (!userExists) {
         let user = new User({
-          fName,
-          lName,
+          firstName,
+          lastName,
           password,
           email,
           otherNames,
@@ -40,8 +40,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         await user.save();
         res.status(201).json({
-          fName: user.Fname,
-          lName: user.Lname,
+          firstName: user.firstName,
+          lastName: user.lastName,
           email: user.email,
           username: user.username,
           country: user.country,

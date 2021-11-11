@@ -16,7 +16,7 @@ const Dues = () => {
     if (!user && !authenticating && !isAuthenticated) {
       router.push("/login");
     } else {
-      setAmount(getAmount(user?.level));
+      user && setAmount(getAmount(user.level));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authenticating, user]);
@@ -35,7 +35,7 @@ const Dues = () => {
   });
 
   // Success payment
-  const onSuccess = (reference) => {
+  const onSuccess = (reference: Function) => {
     console.log(reference);
   };
 
@@ -49,7 +49,7 @@ const Dues = () => {
     <div className={styles.main}>
       <section className={styles.inner_grid}>
         <h1 className={styles.text}>
-          Welcome {user?.fName} {user?.lName},
+          Welcome {user?.firstName} {user?.lastName},
           <br /> Please click the button below to pay your dues
         </h1>
         <div className={styles.buttons}>

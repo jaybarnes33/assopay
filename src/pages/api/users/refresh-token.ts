@@ -20,7 +20,10 @@ const handler = async (
       const refreshToken = req.body.token || getTokenCookie(req);
       if (!refreshToken) return res.status(401).end("Invalid Token");
 
-      const payload: any = verify(refreshToken, process.env.REFRESH_SECRET);
+      const payload: any = verify(
+        refreshToken,
+        process.env.REFRESH_SECRET || ""
+      );
       if (!payload) return res.status(403).end("Invalid Token");
 
       const accessToken = generateAccessToken({ sub: payload.sub });

@@ -4,10 +4,11 @@ export const getAmount = (level: number) => {
       return 50;
 
     case 200:
-      return 30;
     case 300:
-      return 30;
     case 400:
       return 30;
+
+    default:
+      return 0;
   }
 };

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import styles from "@/styles/Forms.module.scss";
-import { IHandlers, RegisterContext } from "./MultiStep";
+import { IHandlers, RegisterContext, TFormik } from "./MultiStep";
 import Button from "../core/Button";
 import Alert from "../core/Alert";
 
@@ -10,100 +10,70 @@ export interface IStep2 {
   confirmPassword: string;
 }
 
-const LoginInfo = ({ next, previous }: IHandlers) => {
+const LoginInfo = ({ formik }: { formik: TFormik }) => {
   const { data, setData } = useContext(RegisterContext);
-  const [formData, setFormData] = useState<IStep2>();
   const [message, setMessage] = useState("");
-  useEffect(() => {
-    if (data?.email) {
-      setFormData((prevState) => ({
-        ...prevState,
-        email: data.email,
-        password: data.password,
-        confirmPassword: data.confirmPassword,
-      }));
-    }
-  }, []);
 
-  const handleNext = () => {
-    setData({ ...data, ...formData });
-    if (formData.confirmPassword === formData.password) {
-      if (formData.email) {
-        next();
-      } else {
-        setMessage("Please fill out all fields marked *");
-      }
-    } else {
-      setMessage("Passwords don't match");
-    }
-  };
+  const { values, handleChange } = formik;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+  // const handleNext = () => {
+  //   setData({ ...data, ...formData })
+  //   if (formData.confirmPassword === formData.password) {
+  //     if (formData.email) {
+  //       next()
+  //     } else {
+  //       setMessage("Please fill out all fields marked *")
+  //     }
+  //   } else {
+  //     setMessage("Passwords don't match")
+  //   }
+  // }
 
-  const handlePrev = () => {
-    previous();
-  };
   return (
     <div className={styles.form}>
       <div className={styles.inner}>
         <div className={styles.input}>
           <label htmlFor="email">
-            Email <span>*</span>
+            Student Email <span>*</span>
           </label>
           <input
             required
+            id="email"
             name="email"
             type="email"
-            placeholder="Enter email"
+            placeholder="Ex. ce-jdoe6020@st.umat.edu.gh"
+            value={values.email}
             onChange={handleChange}
           />
         </div>
         <div className={styles.input}>
-          <label htmlFor="password">
+          <label htmlFor="new-password">
             Password <span>*</span>
           </label>
           <input
             required
+            id="new-password"
             name="password"
             type="password"
-            placeholder="Enter password"
+            autoComplete="new-password"
+            value={values.password}
             onChange={handleChange}
           />
         </div>
         <div className={styles.input}>
-          <label htmlFor="password">
+          <label htmlFor="confirm-password">
             Confirm password <span>*</span>
           </label>
           <input
             required
+            id="confirm-password"
             name="confirmPassword"
             type="password"
-            placeholder="Enter confirm password"
+            autoComplete="new-password"
+            value={values.confirmPassword}
             onChange={handleChange}
           />
         </div>
-      </div>
-      <div className={styles.buttons}>
-        <Button
-          className="btn-outline-primary btn-sm"
-          type="button"
-          onClick={handlePrev}
-        >
-          Back
-        </Button>
-        <Button
-          className="btn-primary btn-sm"
-          type="button"
-          onClick={handleNext}
-        >
-          Next
-        </Button>
       </div>
       {message && <Alert variant="danger">{message}</Alert>}
     </div>
