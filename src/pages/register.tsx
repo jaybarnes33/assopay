@@ -3,13 +3,20 @@ import Button from "@/components/core/Button";
 import Left from "@/components/Forms/Left";
 import Link from "next/link";
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/Forms.module.scss";
 import MultiStep from "@/components/Forms/MultiStep";
+import useUser from "@/hooks/useUser";
+import router from "next/router";
 
 const Signup = () => {
   const [show, setShow] = useState(false);
-
+  const { isAuthenticated, authenticating } = useUser();
+  useEffect(() => {
+    if (isAuthenticated && !authenticating) {
+      router.replace("/dues");
+    }
+  }, [isAuthenticated, authenticating]);
   return (
     <div className={styles.main}>
       <Head>
