@@ -26,7 +26,7 @@ const Login = () => {
     if (isAuthenticated && !authenticating) {
       router.replace("/dues")
     }
-  }, [isAuthenticated, authenticating])
+  }, [isAuthenticated, authenticating, router])
 
   const handleChange = (e: any) => {
     const { name, value } = e.target
