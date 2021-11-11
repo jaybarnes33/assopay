@@ -7,6 +7,7 @@ export interface IUserSchema extends Document {
   fName: string;
   lName: string;
   email: string;
+  hall?: string;
   username: string;
   password: string;
   otherNames: string;
@@ -23,6 +24,9 @@ const userSchema = new mongoose.Schema<IUserSchema>({
     required: true,
   },
   otherNames: {
+    type: String,
+  },
+  hall: {
     type: String,
   },
   password: {
