@@ -1,62 +1,62 @@
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import styles from "../styles/Forms.module.scss";
-import Button from "@/components/core/Button";
-import Left from "@/components/Forms/Left";
-import Alert from "@/components/core/Alert";
-import Link from "next/link";
-import Head from "next/head";
-import useUser from "@/hooks/useUser";
-import { useRouter } from "next/router";
-import axios from "axios";
-import { setAccessToken } from "misc/token";
+import React, { useEffect, useState } from "react"
+import Image from "next/image"
+import styles from "../styles/Forms.module.scss"
+import Button from "@/components/core/Button"
+import Left from "@/components/Forms/Left"
+import Alert from "@/components/core/Alert"
+import Link from "next/link"
+import Head from "next/head"
+import useUser from "@/hooks/useUser"
+import { useRouter } from "next/router"
+import axios from "axios"
+import { setAccessToken } from "misc/token"
 const Login = () => {
   interface ILogin {
-    email: string;
-    password: string;
-    remember: true | false;
+    email: string
+    password: string
+    remember: true | false
   }
-  const router = useRouter();
-  const [show, setShow] = useState(false);
-  const [formData, setFormData] = useState<ILogin>();
-  const { user, authenticating, isAuthenticated } = useUser();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const router = useRouter()
+  const [show, setShow] = useState(false)
+  const [formData, setFormData] = useState<ILogin>()
+  const { user, authenticating, isAuthenticated } = useUser()
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
   useEffect(() => {
     if (isAuthenticated && !authenticating) {
-      router.replace("/dues");
+      router.replace("/dues")
     }
-  }, [isAuthenticated, authenticating, router]);
+  }, [isAuthenticated, authenticating, router])
 
   const handleChange = (e: any) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     name == "remember"
-      ? setFormData((prevState) => ({
+      ? setFormData(prevState => ({
           ...prevState,
-          remember: !prevState.remember,
+          remember: !prevState.remember
         }))
-      : setFormData((prevState) => ({
+      : setFormData(prevState => ({
           ...prevState,
-          [name]: value,
-        }));
-  };
+          [name]: value
+        }))
+  }
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
+  const submitHandler = async e => {
+    e.preventDefault()
 
     try {
-      setLoading(true);
-      const { data } = await axios.post("/api/users/login", { ...formData });
+      setLoading(true)
+      const { data } = await axios.post("/api/users/login", { ...formData })
       if (data.refreshToken) {
-        sessionStorage.setItem("token", data.refreshToken);
+        sessionStorage.setItem("token", data.refreshToken)
       }
 
-      setAccessToken(data.accessToken);
-      router.push("/dues");
+      setAccessToken(data.accessToken)
+      router.push("/dues")
     } catch (error) {
-      setError(error.response.data.message);
+      setError(error.response.data.message)
     }
-  };
+  }
   return (
     <div className={styles.main}>
       <Head>
@@ -80,7 +80,8 @@ const Login = () => {
                   Email <span>*</span>
                 </label>
                 <input
-                  type="text"
+                  id="email"
+                  type="email"
                   name="email"
                   required
                   onChange={handleChange}
@@ -96,10 +97,8 @@ const Login = () => {
                   onChange={handleChange}
                   type={!show ? "password" : "text"}
                   name="password"
-                  placeholder="Please enter your password"
+                  autoComplete="current-password"
                 />
-                <br />
-                <br />
               </div>
               <div className={styles.links}>
                 <small onClick={() => setShow(!show)}>
@@ -128,7 +127,7 @@ const Login = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login
