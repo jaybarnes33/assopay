@@ -54,11 +54,10 @@
 
   .form {
     width: 100%;
-    margin: 16px 0 12px;
+    margin: 16px 0;
   }
 
   button[type="submit"]:not(:disabled) {
-    margin: 20px auto 16px;
     width: 100%;
     color: white;
     background-color: #5578eb;
@@ -112,7 +111,6 @@
 
     label {
       display: inline-block;
-      margin-bottom: 4px;
     }
 
     input,
@@ -131,7 +129,7 @@
       border-color: #0abb87 !important;
     }
 
-    @media (min-width: 768px) {
+    @media (min-width: 768.99px) {
       label {
         color: #212121;
       }
@@ -149,10 +147,12 @@
 .links {
   display: flex;
   gap: 1rem;
+  width: 100%;
   justify-content: space-between;
 
   a {
     color: #c4c4c4;
+    font-size: 12px;
 
     &:last-child {
       text-align: right;
@@ -163,7 +163,7 @@
       }
     }
 
-    @media (min-width: 768px) {
+    @media (min-width: 768.99px) {
       & {
         color: #212121;
 
@@ -174,14 +174,22 @@
       }
     }
   }
-  .buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: space-between;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: space-between;
+  width: 100%;
+
+  button {
     width: 100%;
 
-    button {
-      max-width: 50px !important;
+    &:last-child {
+      --primary-color: #5578eb;
+      --primary-color-focus: #4d6dd4;
+      --primary-color-active: #3757be;
     }
   }
 }

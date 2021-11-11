@@ -26,15 +26,7 @@ const Signup = () => {
               continue.
             </p>
           </Alert>
-          <form onSubmit={submitHandler} className={styles.form}>
-            <Alert variant="info">
-              <p>
-                Provide valid <b className="bold-white">Credentials</b> to
-                continue.
-              </p>
-            </Alert>
-            <MultiStep maxSteps={5} />
-          </form>
+          <MultiStep maxSteps={5} />
           <div className={styles.links}>
             <Link href="/forgot-password">
               <a className="link">Forgot Password</a>

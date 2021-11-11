@@ -91,17 +91,19 @@ const MultiStep = ({ maxSteps }) => {
         )}
 
         <div className={styles.buttons}>
-          <Button variant="outlined" onClick={prevStep} disabled={step === 1}>
+          <Button color="light" onClick={prevStep} disabled={step === 1}>
             Back
           </Button>
-          {step === 5 ? (
-            <Button type="submit" variant="outlined">
+          {step === 4 ? (
+            <Button
+              type="submit"
+              disabled={step < 4}
+              onClick={() => console.log("clicked")}
+            >
               Submit
             </Button>
           ) : (
-            <Button variant="outlined" onClick={nextStep}>
-              Next
-            </Button>
+            <Button onClick={nextStep}>Next</Button>
           )}
         </div>
       </form>
