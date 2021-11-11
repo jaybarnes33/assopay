@@ -1,42 +1,17 @@
-import React, { useContext, useEffect, useState } from "react";
-import styles from "@/styles/Forms.module.scss";
-import { IHandlers, RegisterContext } from "./MultiStep";
-import Button from "../core/Button";
+import React, { useContext, useEffect, useState } from "react"
+import styles from "@/styles/Forms.module.scss"
+import { IHandlers, RegisterContext, TFormik } from "./MultiStep"
+import Button from "../core/Button"
 
 export interface IStep1 {
-  gender?: string;
-  fName: string;
-  lName: string;
-  otherNames: string;
+  gender?: string
+  firstName: string
+  lastName: string
+  otherNames: string
 }
 
-const UserInfo = ({ next }: IHandlers) => {
-  const { data, setData } = useContext(RegisterContext);
-  const [formData, setFormData] = useState<IStep1>();
-
-  useEffect(() => {
-    if (data?.fName) {
-      setFormData((prevState) => ({
-        ...prevState,
-        fName: data.fName,
-        lName: data.lName,
-        otherNames: data.otherNames,
-        gender: data.gender,
-      }));
-    }
-  }, []);
-  const handleNext = () => {
-    next();
-    setData({ ...data, ...formData });
-  };
-
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+const PersonalInfo = ({ formik }: { formik: TFormik }) => {
+  const { data, setData } = useContext(RegisterContext)
 
   return (
     <>
@@ -44,29 +19,32 @@ const UserInfo = ({ next }: IHandlers) => {
         <div className={styles.row}>
           {" "}
           <div className={styles.input}>
-            <label htmlFor="fName">
+            <label htmlFor="firstName">
               First Name <span>*</span>
             </label>
             <input
               required
-              type="text"
-              name="fName"
-              placeholder="Enter first name"
-              value={formData?.fName}
-              onChange={handleChange}
+              id="firstName"
+              name="firstName"
+              autoCapitalize="on"
+              autoComplete="given-name"
+              value={formik.values.firstName}
+              onChange={formik.handleChange}
             />
           </div>
           <div className={styles.input}>
-            <label htmlFor="lName">
+            <label htmlFor="lastName">
               Last Name <span>*</span>
             </label>
             <input
               required
+              id="lastName"
               type="text"
-              name="lName"
-              placeholder="Enter your last name"
-              value={formData?.lName}
-              onChange={handleChange}
+              name="lastName"
+              autoCapitalize="on"
+              autoComplete="family-name"
+              value={formik.values.lastName}
+              onChange={formik.handleChange}
             />
           </div>
         </div>
@@ -74,20 +52,23 @@ const UserInfo = ({ next }: IHandlers) => {
           <div className={styles.input}>
             <label htmlFor="otherNames">Other Names</label>
             <input
+              id="otherNames"
               type="text"
               name="otherNames"
-              placeholder="Enter other names"
-              value={formData?.otherNames}
-              onChange={handleChange}
+              autoCapitalize="on"
+              autoComplete="additional-name"
+              value={formik.values.otherNames}
+              onChange={formik.handleChange}
             />
           </div>
           <div className={styles.input}>
             <label htmlFor="gender">Gender</label>
             <select
+              id="gender"
               className={styles.input}
               name="gender"
-              value={formData?.gender}
-              onChange={handleChange}
+              value={formik.values.gender}
+              onChange={formik.handleChange}
             >
               <option value="">Select Gender</option>
               <option value="female">Female</option>
@@ -96,14 +77,8 @@ const UserInfo = ({ next }: IHandlers) => {
           </div>
         </div>
       </div>
-
-      <div className={styles.buttons}>
-        <Button className="btn-sm" type="button" onClick={handleNext}>
-          Next
-        </Button>
-      </div>
     </>
-  );
-};
+  )
+}
 
-export default UserInfo;
+export default PersonalInfo

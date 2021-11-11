@@ -1,53 +1,31 @@
-import { IHandlers, RegisterContext } from "./MultiStep";
-import styles from "@/styles/Forms.module.scss";
-import Button from "../core/Button";
-import { useContext, useEffect, useState } from "react";
-import Alert from "../core/Alert";
+import { IHandlers, RegisterContext, TFormik } from "./MultiStep"
+import styles from "@/styles/Forms.module.scss"
+import Button from "../core/Button"
+import { useContext, useEffect, useState } from "react"
+import Alert from "../core/Alert"
 export interface IStep3 {
-  level: number;
-  hall: string;
+  level: number
+  hall: string
 }
-const InstitutionalInfo = ({ next, previous }: IHandlers) => {
-  const { data, setData } = useContext(RegisterContext);
-  const [formData, setFormData] = useState<IStep3>();
-  const [message, setMessage] = useState("");
+const InstitutionalInfo = ({ formik }: { formik: TFormik }) => {
+  const { values, handleChange } = formik
+  const [message, setMessage] = useState("")
   const halls = [
     "Chamber of Mines Hall",
     "Kofi Tetteh Hall",
     "Gold Refinery Hall",
-    "Other",
-  ];
+    "Other"
+  ]
 
-  useEffect(() => {
-    if (data.level) {
-      setFormData((prevState) => ({
-        ...prevState,
-        level: data.level,
-        hall: data.hall,
-      }));
-    }
-  }, []);
-  const levels = [100, 200, 300, 400];
-  const handleNext = () => {
-    setData({ ...data, ...formData });
-    if (formData.level && formData?.hall) {
-      next();
-    } else {
-      setMessage("Fill all inputs with label *");
-    }
-  };
-
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const handlePrev = () => {
-    previous();
-  };
+  const levels = [100, 200, 300, 400]
+  // const handleNext = () => {
+  //   setData({ ...data, ...formData })
+  //   if (formData.level && formData?.hall) {
+  //     next()
+  //   } else {
+  //     setMessage("Fill all inputs with label *")
+  //   }
+  // }
 
   return (
     <div className={styles.inner}>
@@ -57,7 +35,7 @@ const InstitutionalInfo = ({ next, previous }: IHandlers) => {
         </label>
         <br />
         <select
-          value={formData?.hall}
+          value={values.hall}
           className={styles.input}
           name="hall"
           required
@@ -78,7 +56,7 @@ const InstitutionalInfo = ({ next, previous }: IHandlers) => {
         <select
           name="level"
           className={styles.input}
-          value={formData?.level}
+          value={values.level}
           onChange={handleChange}
           required
         >
@@ -90,17 +68,9 @@ const InstitutionalInfo = ({ next, previous }: IHandlers) => {
           ))}
         </select>
       </div>
-      <div className={styles.buttons}>
-        <Button type="button" onClick={handlePrev}>
-          Back
-        </Button>
-        <Button type="button" onClick={handleNext}>
-          Next
-        </Button>
-      </div>
       {message && <Alert variant="danger">{message}</Alert>}
     </div>
-  );
-};
+  )
+}
 
-export default InstitutionalInfo;
+export default InstitutionalInfo

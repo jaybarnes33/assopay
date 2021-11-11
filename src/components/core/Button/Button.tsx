@@ -1,7 +1,8 @@
 import { joinClasses } from "@/utils/join-classes"
+import { ButtonHTMLAttributes, forwardRef } from "react"
 import styles from "./button.module.scss"
 
-interface IButtonProps {
+interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode
   variant?: "main" | "outlined"
   color?: "primary" | "light"
@@ -10,16 +11,14 @@ interface IButtonProps {
   type?: "button" | "submit" | "reset"
 }
 
-const Button = ({
-  onClick,
-  children,
-  variant,
-  color,
-  className,
-  type
-}: IButtonProps) => {
+export type Ref = HTMLButtonElement
+export const Button = forwardRef<Ref, IButtonProps>(function CustomButton(
+  { onClick, children, variant, color, className, type, ...props },
+  ref
+) {
   return (
     <button
+      ref={ref}
       className={joinClasses(
         className,
         styles.button,
@@ -27,13 +26,15 @@ const Button = ({
       )}
       onClick={onClick}
       type={type}
+      {...props}
     >
       {children}
     </button>
   )
-}
+})
 
 Button.defaultProps = {
+  type: "button",
   variant: "main",
   color: "primary"
 }

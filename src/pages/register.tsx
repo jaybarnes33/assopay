@@ -34,11 +34,6 @@ const Signup = () => {
               </p>
             </Alert>
             <MultiStep maxSteps={5} />
-            <div className={styles.links}>
-              <Link href="/login">
-                <a className="link">Already have an account? Login </a>
-              </Link>
-            </div>
           </form>
           <div className={styles.links}>
             <Link href="/forgot-password">
