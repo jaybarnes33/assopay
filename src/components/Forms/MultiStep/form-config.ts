@@ -1,3 +1,5 @@
+import * as Yup from "yup"
+
 export const personalInfo = {
   firstName: "",
   lastName: "",
@@ -28,3 +30,12 @@ export const initialValues = {
 }
 
 export type TValues = Omit<typeof initialValues, "level"> & { level?: number }
+
+export const validationSchema = Yup.object({
+  firstName: Yup.string().required().label("First Name"),
+  lastName: Yup.string().required().label("Last Name"),
+  otherNames: Yup.string().label("Other Names"),
+  email: Yup.string().email().required().label("Student Email"),
+  password: Yup.string().min(8).required().label("Password"),
+  confirmPassword: Yup.ref("password")
+})
