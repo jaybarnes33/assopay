@@ -50,7 +50,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         res.status(403).json({ error: "User already exists" });
       }
     } catch (error) {
-      res.status(500).json({ error: "Something went wrong" });
+      console.log(error);
+      res.status(500).json({ error: error, message: "Something went wrong" });
     }
   }
 };

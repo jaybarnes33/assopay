@@ -50,7 +50,9 @@ const PersonalInfo = ({ formik }: { formik: TFormik }) => {
         </div>
         <div className={styles.row}>
           <div className={styles.input}>
-            <label htmlFor="otherNames">Other Names</label>
+            <label htmlFor="lName">
+              Last Name <span>*</span>
+            </label>
             <input
               id="otherNames"
               type="text"
@@ -61,6 +63,7 @@ const PersonalInfo = ({ formik }: { formik: TFormik }) => {
               onChange={formik.handleChange}
             />
           </div>
+
           <div className={styles.input}>
             <label htmlFor="gender">Gender</label>
             <select
