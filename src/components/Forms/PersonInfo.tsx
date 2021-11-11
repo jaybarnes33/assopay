@@ -1,7 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
 import styles from "@/styles/Forms.module.scss";
-import { IHandlers, RegisterContext, TFormik } from "./MultiStep";
-import Button from "../core/Button";
+import { TFormik } from "./MultiStep";
 
 export interface IStep1 {
   gender?: string;
@@ -11,7 +9,7 @@ export interface IStep1 {
 }
 
 const PersonalInfo = ({ formik }: { formik: TFormik }) => {
-  const { data, setData } = useContext(RegisterContext);
+  const { values, errors, touched, handleChange } = formik;
 
   return (
     <>
@@ -28,9 +26,13 @@ const PersonalInfo = ({ formik }: { formik: TFormik }) => {
               name="firstName"
               autoCapitalize="on"
               autoComplete="given-name"
-              value={formik.values.firstName}
-              onChange={formik.handleChange}
+              value={values.firstName}
+              onChange={handleChange}
+              aria-describedby="firstName-message"
             />
+            {errors.firstName && touched.firstName && (
+              <small id="firstName-message">{errors.firstName}</small>
+            )}
           </div>
           <div className={styles.input}>
             <label htmlFor="lastName">
@@ -43,9 +45,13 @@ const PersonalInfo = ({ formik }: { formik: TFormik }) => {
               name="lastName"
               autoCapitalize="on"
               autoComplete="family-name"
-              value={formik.values.lastName}
-              onChange={formik.handleChange}
+              value={values.lastName}
+              onChange={handleChange}
+              aria-describedby="lastName-message"
             />
+            {errors.lastName && touched.lastName && (
+              <small id="lastName-message">{errors.lastName}</small>
+            )}
           </div>
         </div>
         <div className={styles.row}>
@@ -57,9 +63,13 @@ const PersonalInfo = ({ formik }: { formik: TFormik }) => {
               name="otherNames"
               autoCapitalize="on"
               autoComplete="additional-name"
-              value={formik.values.otherNames}
-              onChange={formik.handleChange}
+              value={values.otherNames}
+              onChange={handleChange}
+              aria-describedby="otherNames-message"
             />
+            {errors.otherNames && touched.otherNames && (
+              <small id="otherNames-message">{errors.otherNames}</small>
+            )}
           </div>
 
           <div className={styles.input}>
@@ -68,8 +78,8 @@ const PersonalInfo = ({ formik }: { formik: TFormik }) => {
               id="gender"
               className={styles.input}
               name="gender"
-              value={formik.values.gender}
-              onChange={formik.handleChange}
+              value={values.gender}
+              onChange={handleChange}
             >
               <option value="">Select Gender</option>
               <option value="female">Female</option>

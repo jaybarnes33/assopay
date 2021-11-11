@@ -30,11 +30,11 @@ const Login = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     name == "remember"
-      ? setFormData((prevState) => ({
+      ? setFormData(prevState => ({
           ...prevState,
           remember: !prevState.remember,
         }))
-      : setFormData((prevState) => ({
+      : setFormData(prevState => ({
           ...prevState,
           [name]: value,
         }));
@@ -117,13 +117,11 @@ const Login = () => {
                   )}
                 </small>
                 <Link href="/register">
-                  <small className="link">
-                    Don&apos;t have an account? Register{" "}
-                  </small>
+                  <a className="link">Don&apos;t have an account? Register </a>
                 </Link>
               </div>
               <Button className="btn-primary btn-sm" type="submit">
-                Submit
+                Login
               </Button>
             </div>
           </form>

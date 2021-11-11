@@ -11,23 +11,7 @@ export interface IStep2 {
 }
 
 const LoginInfo = ({ formik }: { formik: TFormik }) => {
-  const { data, setData } = useContext(RegisterContext);
-  const [message, setMessage] = useState("");
-
-  const { values, handleChange } = formik;
-
-  // const handleNext = () => {
-  //   setData({ ...data, ...formData })
-  //   if (formData.confirmPassword === formData.password) {
-  //     if (formData.email) {
-  //       next()
-  //     } else {
-  //       setMessage("Please fill out all fields marked *")
-  //     }
-  //   } else {
-  //     setMessage("Passwords don't match")
-  //   }
-  // }
+  const { values, errors, touched, handleChange } = formik;
 
   return (
     <div className={styles.form}>
@@ -44,7 +28,11 @@ const LoginInfo = ({ formik }: { formik: TFormik }) => {
             placeholder="Ex. ce-jdoe6020@st.umat.edu.gh"
             value={values.email}
             onChange={handleChange}
+            aria-describedby="email-message"
           />
+          {errors.email && touched.email && (
+            <small id="email-message">{errors.email}</small>
+          )}
         </div>
         <div className={styles.input}>
           <label htmlFor="new-password">
@@ -58,7 +46,11 @@ const LoginInfo = ({ formik }: { formik: TFormik }) => {
             autoComplete="new-password"
             value={values.password}
             onChange={handleChange}
+            aria-describedby="password-message"
           />
+          {errors.password && touched.password && (
+            <small id="password-message">{errors.password}</small>
+          )}
         </div>
         <div className={styles.input}>
           <label htmlFor="confirm-password">
@@ -72,10 +64,15 @@ const LoginInfo = ({ formik }: { formik: TFormik }) => {
             autoComplete="new-password"
             value={values.confirmPassword}
             onChange={handleChange}
+            aria-describedby="confirm-password-message"
           />
+          {errors.confirmPassword && touched.confirmPassword && (
+            <small id="confirm-password-message">
+              {errors.confirmPassword}
+            </small>
+          )}
         </div>
       </div>
-      {message && <Alert variant="danger">{message}</Alert>}
     </div>
   );
 };
