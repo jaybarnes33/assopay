@@ -13,13 +13,12 @@
     align-items: center;
     .text {
       color: #eaeaea;
-
+      padding: 1rem;
       font-family: var(--secondary-font);
 
       > h1 {
         text-transform: capitalize;
         font-size: 3rem;
-        padding: 1rem;
       }
     }
 
@@ -27,6 +26,7 @@
       display: flex;
       gap: 1rem;
       justify-content: center;
+
       align-items: center;
       flex-direction: column;
 
