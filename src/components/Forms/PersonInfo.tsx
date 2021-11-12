@@ -1,42 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
 import styles from "@/styles/Forms.module.scss";
-import { IHandlers, RegisterContext } from "./MultiStep";
-import Button from "../core/Button";
+import { TFormik } from "./MultiStep";
 
 export interface IStep1 {
   gender?: string;
-  fName: string;
-  lName: string;
+  firstName: string;
+  lastName: string;
   otherNames: string;
 }
 
-const UserInfo = ({ next }: IHandlers) => {
-  const { data, setData } = useContext(RegisterContext);
-  const [formData, setFormData] = useState<IStep1>();
-
-  useEffect(() => {
-    if (data?.fName) {
-      setFormData((prevState) => ({
-        ...prevState,
-        fName: data.fName,
-        lName: data.lName,
-        otherNames: data.otherNames,
-        gender: data.gender,
-      }));
-    }
-  }, [data]);
-  const handleNext = () => {
-    next();
-    setData({ ...data, ...formData });
-  };
-
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+const PersonalInfo = ({ formik }: { formik: TFormik }) => {
+  const { values, errors, touched, handleChange } = formik;
 
   return (
     <>
@@ -44,50 +17,67 @@ const UserInfo = ({ next }: IHandlers) => {
         <div className={styles.row}>
           {" "}
           <div className={styles.input}>
-            <label htmlFor="fName">
+            <label htmlFor="firstName">
               First Name <span>*</span>
             </label>
             <input
               required
-              type="text"
-              name="fName"
-              placeholder="Enter first name"
-              value={formData?.fName}
+              id="firstName"
+              name="firstName"
+              autoCapitalize="on"
+              autoComplete="given-name"
+              value={values.firstName}
               onChange={handleChange}
+              aria-describedby="firstName-message"
             />
+            {errors.firstName && touched.firstName && (
+              <small id="firstName-message">{errors.firstName}</small>
+            )}
           </div>
           <div className={styles.input}>
             <label htmlFor="otherNames">Other Names</label>
             <input
+              id="otherNames"
               type="text"
               name="otherNames"
-              placeholder="Enter other names"
-              value={formData?.otherNames}
+              autoCapitalize="on"
+              autoComplete="additional-name"
+              value={values.otherNames}
               onChange={handleChange}
+              aria-describedby="otherNames-message"
             />
+            {errors.otherNames && touched.otherNames && (
+              <small id="otherNames-message">{errors.otherNames}</small>
+            )}
           </div>
         </div>
         <div className={styles.row}>
           <div className={styles.input}>
-            <label htmlFor="lName">
+            <label htmlFor="lastName">
               Last Name <span>*</span>
             </label>
             <input
               required
+              id="lastName"
               type="text"
-              name="lName"
-              placeholder="Enter your last name"
-              value={formData?.lName}
+              name="lastName"
+              autoCapitalize="on"
+              autoComplete="family-name"
+              value={values.lastName}
               onChange={handleChange}
+              aria-describedby="lastName-message"
             />
+            {errors.lastName && touched.lastName && (
+              <small id="lastName-message">{errors.lastName}</small>
+            )}
           </div>
-
           <div className={styles.input}>
             <label htmlFor="gender">Gender</label>
             <select
+              id="gender"
               className={styles.input}
               name="gender"
-              value={formData?.gender}
+              value={values.gender}
               onChange={handleChange}
             >
               <option value="">Select Gender</option>
@@ -97,14 +87,8 @@ const UserInfo = ({ next }: IHandlers) => {
           </div>
         </div>
       </div>
-
-      <div className={styles.buttons}>
-        <Button className="btn-sm" type="button" onClick={handleNext}>
-          Next
-        </Button>
-      </div>
     </>
   );
 };
 
-export default UserInfo;
+export default PersonalInfo;

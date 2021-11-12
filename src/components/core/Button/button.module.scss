@@ -1,5 +1,9 @@
 $colors: primary, light;
 $variants: main, outlined;
+$button-text-color: (
+  "primary": var(--light-color),
+  "light": var(--primary-color)
+);
 
 .button {
   --outlined-light-focus: #fff2;
@@ -8,8 +12,7 @@ $variants: main, outlined;
   --outlined-primary-active: #1348248a;
 
   border: none;
-  min-width: 150px;
-  padding: 0.5rem;
+  padding: 0.5rem 2rem;
   display: grid;
   place-items: center;
   font-size: 1rem;
@@ -22,12 +25,12 @@ $variants: main, outlined;
   transition: background-color ease-out 100ms;
 
   @each $variant in $variants {
+    @if $variant == outlined {
+      background-color: transparent;
+    }
+
     &-#{$variant} {
       @each $color in $colors {
-        @if $variant==outlined {
-          background-color: transparent;
-        }
-
         &-#{$color}:not(:disabled) {
           @if $variant == outlined {
             --#{$color}-color-focus: var(--outlined-#{$color}-focus);
@@ -37,12 +40,7 @@ $variants: main, outlined;
             border: 2px solid var(--#{$color}-color);
           } @else {
             background-color: var(--#{$color}-color);
-
-            @if $color == primary {
-              color: var(--light-color);
-            } @else {
-              color: var(--primary-color);
-            }
+            color: map-get($button-text-color, $color);
           }
 
           &:hover,

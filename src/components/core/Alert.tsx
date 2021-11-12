@@ -13,10 +13,9 @@ const Alert = ({ variant, children }: AlertProps) => {
       <style jsx>
         {`
           .alert {
-            width: 100%;
             display: flex;
             justify-content: center;
-            padding: 0.2rem;
+            padding: 0.5rem 1rem;
           }
 
           .alert-text {
@@ -28,7 +27,7 @@ const Alert = ({ variant, children }: AlertProps) => {
 
           .info {
             left: 0;
-            background-color: #5578eb;
+            background-color: var(--primary-color-focus);
             border: #5578eb;
             position: absolute;
             top: -1rem;

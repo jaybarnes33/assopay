@@ -8,17 +8,16 @@ import Link from "next/link";
 import Head from "next/head";
 import useUser from "@/hooks/useUser";
 import { useRouter } from "next/router";
-import axios from "axios";
-import { setAccessToken } from "misc/token";
+import axios, { AxiosError } from "axios";
+import { setAccessToken } from "@/misc/token";
 const Login = () => {
-  interface ILogin {
-    email: string;
-    password: string;
-    remember: true | false;
-  }
   const router = useRouter();
   const [show, setShow] = useState(false);
-  const [formData, setFormData] = useState<ILogin>();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    remember: true,
+  });
   const { user, authenticating, isAuthenticated } = useUser();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -28,20 +27,20 @@ const Login = () => {
     }
   }, [isAuthenticated, authenticating, router]);
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     name == "remember"
-      ? setFormData((prevState) => ({
+      ? setFormData(prevState => ({
           ...prevState,
           remember: !prevState.remember,
         }))
-      : setFormData((prevState) => ({
+      : setFormData(prevState => ({
           ...prevState,
           [name]: value,
         }));
   };
 
-  const submitHandler = async (e) => {
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
@@ -54,7 +53,12 @@ const Login = () => {
       setAccessToken(data.accessToken);
       router.push("/dues");
     } catch (error) {
-      setError(error.response.data.message);
+      if (axios.isAxiosError(error)) {
+        const serverError = error as AxiosError;
+        if (serverError.response) {
+          setError(serverError.response.data.message);
+        }
+      }
     }
   };
   return (
@@ -65,7 +69,6 @@ const Login = () => {
       <Left />
       <div className={styles.right}>
         <div className={styles.form_container}>
-          {error && <Alert variant="danger-bg">{error}</Alert>}
           <Alert variant="info">
             <p>
               Provide valid <b className="bold-white">student email</b> and
@@ -80,7 +83,8 @@ const Login = () => {
                   Email <span>*</span>
                 </label>
                 <input
-                  type="text"
+                  id="email"
+                  type="email"
                   name="email"
                   required
                   onChange={handleChange}
@@ -96,10 +100,8 @@ const Login = () => {
                   onChange={handleChange}
                   type={!show ? "password" : "text"}
                   name="password"
-                  placeholder="Please enter your password"
+                  autoComplete="current-password"
                 />
-                <br />
-                <br />
               </div>
               <div className={styles.links}>
                 <small onClick={() => setShow(!show)}>
@@ -113,18 +115,24 @@ const Login = () => {
                     </>
                   )}
                 </small>
-                <Link href="/register">
-                  <small className="link">
-                    Don&apos;t have an account? Register{" "}
-                  </small>
-                </Link>
               </div>
-              <Button className="btn-primary btn-sm" type="submit">
-                Submit
-              </Button>
             </div>
+            <Button type="submit">Login</Button>
+            <div>
+              {" "}
+              <Link href="/forgot-password">
+                <a className="link mr-2">Forgot Password</a>
+              </Link>
+              <Link href="/register">
+                <a className="link">Don&apos;t have an account? Register </a>
+              </Link>
+            </div>
+            {error && (
+              <Alert variant="danger-bg left">
+                <p>Invalid Credentials</p>
+              </Alert>
+            )}
           </form>
-          <div></div>
         </div>
       </div>
     </div>

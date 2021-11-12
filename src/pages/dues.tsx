@@ -8,6 +8,7 @@ import buttonStyles from "@/components/core/Button/button.module.scss";
 import { joinClasses } from "@/utils/join-classes";
 import makeSecuredRequest from "@/utils/makeSecuredRequest";
 import { getAmount } from "@/utils/getAmount";
+import { isPaid } from "@/utils/isPaid";
 const Dues = () => {
   const { user, authenticating, isAuthenticated } = useUser();
   const [amount, setAmount] = useState(0);
@@ -16,7 +17,7 @@ const Dues = () => {
     if (!user && !authenticating && !isAuthenticated) {
       router.push("/login");
     } else {
-      setAmount(getAmount(user?.level));
+      user && setAmount(getAmount(user.level));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authenticating, user]);
@@ -34,8 +35,13 @@ const Dues = () => {
         : "pk_test_416cb666b87d1627e714824ceb3fc4e9ff3e6acc",
   });
 
+  console.log(isPaid(user?.dues));
   // Success payment
-  const onSuccess = (reference) => {
+  const onSuccess = async (reference: Function) => {
+    await makeSecuredRequest("/api/dues", "POST", {
+      amount,
+      reference,
+    });
     console.log(reference);
   };
 
@@ -44,24 +50,33 @@ const Dues = () => {
     // implementation for  whatever you want to do when the Paystack dialog closed.
     console.log("closed");
   };
-  const handlePayment = () => {};
+
   return (
     <div className={styles.main}>
       <section className={styles.inner_grid}>
-        <h1 className={styles.text}>
-          Welcome {user?.fName} {user?.lName},
-          <br /> Please click the button below to pay your dues
-        </h1>
+        <div className={`${styles.inner_grid} ${styles.text}`}>
+          <h1>
+            Welcome {user?.firstName} {user?.lastName},
+          </h1>
+          <h2>
+            {!isPaid(user?.dues)
+              ? "Please click the button below to pay your dues"
+              : "Your dues have already been paid"}
+          </h2>
+        </div>
+
         <div className={styles.buttons}>
-          <Button
-            onClick={() => initializePayment(onSuccess, onClose)}
-            className={joinClasses(
-              buttonStyles.button,
-              buttonStyles["button-main-light"]
-            )}
-          >
-            Pay Dues
-          </Button>
+          {!isPaid(user?.dues) && (
+            <Button
+              onClick={() => initializePayment(onSuccess, onClose)}
+              className={joinClasses(
+                buttonStyles.button,
+                buttonStyles["button-main-light"]
+              )}
+            >
+              Pay Dues
+            </Button>
+          )}
         </div>
       </section>
     </div>

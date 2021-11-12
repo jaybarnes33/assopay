@@ -1,4 +1,4 @@
-import { IHandlers, RegisterContext } from "./MultiStep";
+import { IHandlers, RegisterContext, TFormik } from "./MultiStep";
 import styles from "@/styles/Forms.module.scss";
 import Button from "../core/Button";
 import { useContext, useEffect, useState } from "react";
@@ -7,10 +7,8 @@ export interface IStep3 {
   level: number;
   hall: string;
 }
-const InstitutionalInfo = ({ next, previous }: IHandlers) => {
-  const { data, setData } = useContext(RegisterContext);
-  const [formData, setFormData] = useState<IStep3>();
-  const [message, setMessage] = useState("");
+const InstitutionalInfo = ({ formik }: { formik: TFormik }) => {
+  const { values, errors, touched, handleChange } = formik;
   const halls = [
     "Chamber of Mines Hall",
     "Kofi Tetteh Hall",
@@ -18,36 +16,7 @@ const InstitutionalInfo = ({ next, previous }: IHandlers) => {
     "Other",
   ];
 
-  useEffect(() => {
-    if (data.level) {
-      setFormData((prevState) => ({
-        ...prevState,
-        level: data.level,
-        hall: data.hall,
-      }));
-    }
-  }, []);
   const levels = [100, 200, 300, 400];
-  const handleNext = () => {
-    setData({ ...data, ...formData });
-    if (formData.level && formData?.hall) {
-      next();
-    } else {
-      setMessage("Fill all inputs with label *");
-    }
-  };
-
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const handlePrev = () => {
-    previous();
-  };
 
   return (
     <div className={styles.inner}>
@@ -57,11 +26,13 @@ const InstitutionalInfo = ({ next, previous }: IHandlers) => {
         </label>
         <br />
         <select
-          value={formData?.hall}
+          id="hall"
+          value={values.hall}
           className={styles.input}
           name="hall"
           required
           onChange={handleChange}
+          aria-describedby="hall-message"
         >
           <option>Select Hall</option>
           {halls.map((hall, index) => (
@@ -70,16 +41,21 @@ const InstitutionalInfo = ({ next, previous }: IHandlers) => {
             </option>
           ))}
         </select>
+        {errors.hall && touched.hall && (
+          <small id="hall-message">{errors.hall}</small>
+        )}
       </div>
       <div className={styles.input}>
         <label htmlFor="level">
           Level <span>*</span>
         </label>
         <select
+          id="level"
           name="level"
           className={styles.input}
-          value={formData?.level}
+          value={values.level}
           onChange={handleChange}
+          aria-describedby="level-message"
           required
         >
           <option>Select Level</option>
@@ -89,16 +65,10 @@ const InstitutionalInfo = ({ next, previous }: IHandlers) => {
             </option>
           ))}
         </select>
+        {errors.level && touched.level && (
+          <small id="level-message">{errors.level}</small>
+        )}
       </div>
-      <div className={styles.buttons}>
-        <Button type="button" onClick={handlePrev}>
-          Back
-        </Button>
-        <Button type="button" onClick={handleNext}>
-          Next
-        </Button>
-      </div>
-      {message && <Alert variant="danger">{message}</Alert>}
     </div>
   );
 };

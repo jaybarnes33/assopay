@@ -1,25 +1,31 @@
-import mongoose, { Document } from "mongoose";
+import mongoose, { Document, Types } from "mongoose";
 import bcrypt from "bcryptjs";
 
+interface IDues {
+  year: string;
+  amout: string;
+  reference: Record<string, string | number>;
+}
 export interface IUserSchema extends Document {
   gender?: string;
   phone?: string;
-  fName: string;
-  lName: string;
+  firstName: string;
+  lastName: string;
   email: string;
   hall?: string;
   username: string;
   password: string;
   otherNames: string;
   level: number;
+  dues: Array<IDues>;
 }
 
 const userSchema = new mongoose.Schema<IUserSchema>({
-  fName: {
+  firstName: {
     type: String,
     required: true,
   },
-  lName: {
+  lastName: {
     type: String,
     required: true,
   },
@@ -47,6 +53,7 @@ const userSchema = new mongoose.Schema<IUserSchema>({
     type: String,
   },
   phone: { type: String },
+  dues: [],
 });
 
 userSchema.pre("save", async function (next) {

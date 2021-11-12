@@ -11,7 +11,7 @@ const handler = async (
     try {
       await dbConnect();
 
-      const token = req.headers.authorization.split(" ")[1];
+      const token = req.headers.authorization?.split(" ")[1] || "";
 
       const userID = getUserID(token);
 
@@ -19,8 +19,8 @@ const handler = async (
 
       const {
         username,
-        fName,
-        lName,
+        firstName,
+        lastName,
         password,
         email,
         image,
@@ -29,8 +29,8 @@ const handler = async (
       } = req.body;
 
       user.username = username || user.username;
-      user.fName = fName || user.fName;
-      user.lName = lName || user.lName;
+      user.firstName = firstName || user.firstName;
+      user.lastName = lastName || user.lastName;
       user.password = password || user.password;
       user.email = email || user.email;
       user.image = image || user.image;
