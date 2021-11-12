@@ -69,7 +69,6 @@ const Login = () => {
       <Left />
       <div className={styles.right}>
         <div className={styles.form_container}>
-          {error && <Alert variant="danger-bg">{error}</Alert>}
           <Alert variant="info">
             <p>
               Provide valid <b className="bold-white">student email</b> and
@@ -116,16 +115,24 @@ const Login = () => {
                     </>
                   )}
                 </small>
-                <Link href="/register">
-                  <a className="link">Don&apos;t have an account? Register </a>
-                </Link>
               </div>
-              <Button className="btn-primary btn-sm" type="submit">
-                Login
-              </Button>
             </div>
+            <Button type="submit">Login</Button>
+            <div>
+              {" "}
+              <Link href="/forgot-password">
+                <a className="link mr-2">Forgot Password</a>
+              </Link>
+              <Link href="/register">
+                <a className="link">Don&apos;t have an account? Register </a>
+              </Link>
+            </div>
+            {error && (
+              <Alert variant="danger-bg left">
+                <p>Invalid Credentials</p>
+              </Alert>
+            )}
           </form>
-          <div></div>
         </div>
       </div>
     </div>

@@ -37,15 +37,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           phone,
           gender,
         });
-
+        user.dues = [];
         await user.save();
-        res.status(201).json({
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-          username: user.username,
-          country: user.country,
-        });
+        res.status(201).json(user);
       } else {
         res.status(403).json({ error: "User already exists" });
       }

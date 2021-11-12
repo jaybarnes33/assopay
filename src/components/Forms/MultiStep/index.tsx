@@ -19,6 +19,7 @@ import {
   TValues,
   validationSchema,
 } from "./form-config";
+import Alert from "@/components/core/Alert";
 export interface IHandlers {
   next?: () => void;
   previous?: () => void;
@@ -113,6 +114,7 @@ const MultiStep = () => {
   return (
     <>
       <form onSubmit={handleSubmit} className={styles.form}>
+        {error && <Alert variant="danger">{error}</Alert>}
         <CurrentStep activeStep={step} formik={formik} />
         <div className={styles.buttons}>
           <Button color="light" onClick={prevStep} disabled={step === 1}>
