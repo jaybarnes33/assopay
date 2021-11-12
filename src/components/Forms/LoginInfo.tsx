@@ -1,8 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
 import styles from "@/styles/Forms.module.scss";
-import { IHandlers, RegisterContext, TFormik } from "./MultiStep";
-import Button from "../core/Button";
-import Alert from "../core/Alert";
+import { TFormik } from "./MultiStep";
 
 export interface IStep2 {
   email: string;
