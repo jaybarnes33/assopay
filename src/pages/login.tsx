@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
+import { useEffect, useState } from "react";
 import styles from "../styles/Forms.module.scss";
 import Button from "@/components/core/Button";
 import Left from "@/components/Forms/Left";
@@ -10,17 +9,19 @@ import useUser from "@/hooks/useUser";
 import { useRouter } from "next/router";
 import axios, { AxiosError } from "axios";
 import { setAccessToken } from "@/misc/token";
+
 const Login = () => {
   const router = useRouter();
   const [show, setShow] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    remember: true,
+    remember: true
   });
   const { user, authenticating, isAuthenticated } = useUser();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
   useEffect(() => {
     if (isAuthenticated && !authenticating) {
       router.replace("/dues");
@@ -29,15 +30,11 @@ const Login = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    name == "remember"
-      ? setFormData(prevState => ({
-          ...prevState,
-          remember: !prevState.remember,
-        }))
-      : setFormData(prevState => ({
-          ...prevState,
-          [name]: value,
-        }));
+
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
   };
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -59,67 +56,83 @@ const Login = () => {
           setError(serverError.response.data.message);
         }
       }
+    } finally {
+      setLoading(false);
     }
   };
+
   return (
     <div className={styles.main}>
       <Head>
         <title>Login</title>
       </Head>
       <Left />
-      <div className={styles.right}>
-        <div className={styles.form_container}>
-          <Alert variant="info">
-            <p>
-              Provide valid <b className="bold-white">student email</b> and
-              <b className="bold-white"> password</b> to continue.
-            </p>
-          </Alert>
-          <br />
-          <form onSubmit={submitHandler} className={styles.form}>
-            <div className={styles.inner}>
-              <div className={styles.input}>
-                <label>
-                  Email <span>*</span>
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  name="email"
-                  required
-                  onChange={handleChange}
-                  placeholder="Please enter your student email"
-                />
+      <main>
+        <div className={styles.back}>
+          <Link href="/">
+            <a>
+              <i className="bi bi-arrow-left"></i> Go back home
+            </a>
+          </Link>
+        </div>
+        <div className={styles.right}>
+          <div className={styles.form_container}>
+            <Alert variant="info">
+              <p>
+                Provide valid <b className="bold-white">student email</b> and
+                <b className="bold-white"> password</b> to continue.
+              </p>
+            </Alert>
+            <br />
+            <form onSubmit={submitHandler} className={styles.form}>
+              <div className={styles.inner}>
+                <div className={styles.input}>
+                  <label>
+                    Email <span>*</span>
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    required
+                    onChange={handleChange}
+                    placeholder="Please enter your student email"
+                  />
+                </div>
+                <div className={styles.input}>
+                  <label htmlFor="current-password">
+                    Password <span>*</span>
+                  </label>
+                  <input
+                    id="current-password"
+                    required
+                    onChange={handleChange}
+                    type={!show ? "password" : "text"}
+                    name="password"
+                    autoComplete="current-password"
+                  />
+                  <div>
+                    <button onClick={() => setShow(!show)}>
+                      {!show ? (
+                        <>
+                          Show Password <i className="bi bi-eye" />
+                        </>
+                      ) : (
+                        <>
+                          Hide Password <i className="bi bi-eye-slash" />
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div className={styles.input}>
-                <label htmlFor="password">
-                  Password <span>*</span>
-                </label>
-                <input
-                  required
-                  onChange={handleChange}
-                  type={!show ? "password" : "text"}
-                  name="password"
-                  autoComplete="current-password"
-                />
+              <div className={styles["login-button"]}>
+                <Button type="submit" disabled={loading}>
+                  Login
+                </Button>
               </div>
-              <div className={styles.links}>
-                <small onClick={() => setShow(!show)}>
-                  {!show ? (
-                    <>
-                      Show Password <i className="bi bi-eye" />
-                    </>
-                  ) : (
-                    <>
-                      Hide Password <i className="bi bi-eye-slash" />
-                    </>
-                  )}
-                </small>
-              </div>
-            </div>
-            <Button type="submit">Login</Button>
-            <div>
-              {" "}
+            </form>
+            <div className={styles.links}>
               <Link href="/forgot-password">
                 <a className="link mr-2">Forgot Password</a>
               </Link>
@@ -132,9 +145,9 @@ const Login = () => {
                 <p>Invalid Credentials</p>
               </Alert>
             )}
-          </form>
+          </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

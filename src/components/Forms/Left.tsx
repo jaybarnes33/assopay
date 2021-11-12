@@ -1,19 +1,21 @@
 import { useRouter } from "next/router";
-import Button from "../core/Button";
-
+import Link from "next/link";
 import styles from "@/styles/Forms.module.scss";
+import { joinClasses } from "@/utils/join-classes";
+
 const Left = () => {
   const router = useRouter();
+
   return (
     <div className={styles.left}>
-      <Button
-        className="btn-outline-main btn-sm absolute-left"
-        onClick={() => router.back()}
-      >
-        Go back
-      </Button>
-
-      <p>Welcome, please {router.pathname.split("/")[1]} to continue</p>
+      <div>
+        <Link href="/">
+          <a className={joinClasses(styles.back, "absolute-left")}>
+            <i className="bi bi-arrow-left"></i> Go back home
+          </a>
+        </Link>
+      </div>
+      <h1>Welcome, please {router.pathname.split("/")[1]} to continue</h1>
     </div>
   );
 };

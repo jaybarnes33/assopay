@@ -1,8 +1,6 @@
-import { ReactNode } from "react";
-
 interface AlertProps {
   variant?: string;
-  children: ReactNode;
+  children: React.ReactNode;
 }
 const Alert = ({ variant, children }: AlertProps) => {
   return (

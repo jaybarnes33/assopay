@@ -1,12 +1,11 @@
-import { IHandlers, RegisterContext, TFormik } from "./MultiStep";
+import { TFormik } from "./MultiStep";
 import styles from "@/styles/Forms.module.scss";
-import Button from "../core/Button";
-import { useContext, useEffect, useState } from "react";
-import Alert from "../core/Alert";
+
 export interface IStep3 {
   level: number;
   hall: string;
 }
+
 const InstitutionalInfo = ({ formik }: { formik: TFormik }) => {
   const { values, errors, touched, handleChange } = formik;
   const halls = [

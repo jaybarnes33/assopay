@@ -20,16 +20,6 @@ import {
   validationSchema,
 } from "./form-config";
 import Alert from "@/components/core/Alert";
-export interface IHandlers {
-  next?: () => void;
-  previous?: () => void;
-}
-
-export type IRegisterProps = Partial<IStep1 & IStep2 & IStep3 & IStep4>;
-
-export const RegisterContext = createContext<SetableContext<IRegisterProps>>(
-  {}
-);
 
 export type TFormik = Omit<FormikProps<TValues>, "handleSubmit">;
 
@@ -52,7 +42,6 @@ const CurrentStep = ({
 
 const MultiStep = () => {
   const [step, setStep] = useState(1);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
 
@@ -121,11 +110,7 @@ const MultiStep = () => {
             Back
           </Button>
           {step === 4 ? (
-            <Button
-              type="submit"
-              disabled={step < 4}
-              onClick={() => console.log("clicked")}
-            >
+            <Button type="submit" disabled={formik.isSubmitting}>
               Sign up
             </Button>
           ) : (
