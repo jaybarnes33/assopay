@@ -60,9 +60,8 @@
   }
 
   button[type="submit"]:not(:disabled) {
-    width: 100%;
     color: white;
-    background-color: #5578eb;
+    background-color: var(--primary-color-active);
 
     &:hover,
     &:focus {

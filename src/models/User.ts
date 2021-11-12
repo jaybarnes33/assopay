@@ -1,6 +1,11 @@
-import mongoose, { Document } from "mongoose";
+import mongoose, { Document, Types } from "mongoose";
 import bcrypt from "bcryptjs";
 
+interface IDues {
+  year: string;
+  amout: string;
+  reference: Record<string, string | number>;
+}
 export interface IUserSchema extends Document {
   gender?: string;
   phone?: string;
@@ -12,6 +17,7 @@ export interface IUserSchema extends Document {
   password: string;
   otherNames: string;
   level: number;
+  dues: Array<IDues>;
 }
 
 const userSchema = new mongoose.Schema<IUserSchema>({
@@ -47,6 +53,7 @@ const userSchema = new mongoose.Schema<IUserSchema>({
     type: String,
   },
   phone: { type: String },
+  dues: [],
 });
 
 userSchema.pre("save", async function (next) {

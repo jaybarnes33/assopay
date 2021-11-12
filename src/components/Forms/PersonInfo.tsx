@@ -35,6 +35,24 @@ const PersonalInfo = ({ formik }: { formik: TFormik }) => {
             )}
           </div>
           <div className={styles.input}>
+            <label htmlFor="otherNames">Other Names</label>
+            <input
+              id="otherNames"
+              type="text"
+              name="otherNames"
+              autoCapitalize="on"
+              autoComplete="additional-name"
+              value={values.otherNames}
+              onChange={handleChange}
+              aria-describedby="otherNames-message"
+            />
+            {errors.otherNames && touched.otherNames && (
+              <small id="otherNames-message">{errors.otherNames}</small>
+            )}
+          </div>
+        </div>
+        <div className={styles.row}>
+          <div className={styles.input}>
             <label htmlFor="lastName">
               Last Name <span>*</span>
             </label>
@@ -53,25 +71,6 @@ const PersonalInfo = ({ formik }: { formik: TFormik }) => {
               <small id="lastName-message">{errors.lastName}</small>
             )}
           </div>
-        </div>
-        <div className={styles.row}>
-          <div className={styles.input}>
-            <label htmlFor="otherNames">Other Names</label>
-            <input
-              id="otherNames"
-              type="text"
-              name="otherNames"
-              autoCapitalize="on"
-              autoComplete="additional-name"
-              value={values.otherNames}
-              onChange={handleChange}
-              aria-describedby="otherNames-message"
-            />
-            {errors.otherNames && touched.otherNames && (
-              <small id="otherNames-message">{errors.otherNames}</small>
-            )}
-          </div>
-
           <div className={styles.input}>
             <label htmlFor="gender">Gender</label>
             <select
