@@ -4,5 +4,7 @@ declare namespace NodeJS {
     JWT_SECRET: string;
     REFRESH_SECRET: string;
     ATLAS_URI: string;
+    NEXT_PUBLIC_PAYSTACK_KEY: string;
+    NEXT_PUBLIC_PAYSTACK_TEST: string;
   }
 }

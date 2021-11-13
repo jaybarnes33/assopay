@@ -66,17 +66,17 @@ const Dues = () => {
         </div>
 
         <div className={styles.buttons}>
-          {!isPaid(user?.dues) && (
-            <Button
-              onClick={() => initializePayment(onSuccess, onClose)}
-              className={joinClasses(
-                buttonStyles.button,
-                buttonStyles["button-main-light"]
-              )}
-            >
-              Pay Dues
-            </Button>
-          )}
+          {/* {!isPaid(user?.dues) && ( */}
+          <Button
+            onClick={() => initializePayment(onSuccess, onClose)}
+            className={joinClasses(
+              buttonStyles.button,
+              buttonStyles["button-main-light"]
+            )}
+          >
+            Pay Dues
+          </Button>
+          {/* )} */}
         </div>
       </section>
     </div>

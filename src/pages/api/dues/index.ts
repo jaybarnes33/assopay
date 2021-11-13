@@ -5,6 +5,7 @@ import { setTokenCookie } from "@/utils/auth-cookie";
 import { generateAccessToken, generateRefreshToken } from "@/utils/token";
 import { getAmount } from "@/utils/getAmount";
 import getUserID from "@/utils/get-userID";
+import { sendSms } from "@/utils/sendSms";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
@@ -24,7 +25,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       });
 
       await user.save();
-      console.log(user);
+      await sendSms(
+        user.phone,
+        `Hi, ${user.firstName} ${user.lastName} Your dues have been paid successfully. ${reference.reference} is your transaction reference. Please show this message before you register`
+      );
+
       res.status(202).json({ user });
     } catch (error) {
       console.log(error);
