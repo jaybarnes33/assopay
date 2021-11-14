@@ -1,14 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
 import styles from "@/styles/Forms.module.scss";
-import { IHandlers, RegisterContext, TFormik } from "./MultiStep";
-import Button from "../core/Button";
-import Alert from "../core/Alert";
-
-export interface IStep2 {
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+import { TFormik } from "./MultiStep";
 
 const LoginInfo = ({ formik }: { formik: TFormik }) => {
   const { values, errors, touched, handleChange } = formik;

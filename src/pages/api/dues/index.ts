@@ -1,9 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "@/lib/mongo";
 import User from "@/models/User";
-import { setTokenCookie } from "@/utils/auth-cookie";
-import { generateAccessToken, generateRefreshToken } from "@/utils/token";
-import { getAmount } from "@/utils/getAmount";
 import getUserID from "@/utils/get-userID";
 import { sendSms } from "@/utils/sendSms";
 
@@ -18,10 +15,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       const user = await User.findById(userID);
 
-      user.dues.push!({
+      user?.dues.push({
         year: `${new Date().getFullYear()} - ${new Date().getFullYear() + 1}`,
         amount: amount,
-        reference: reference,
+        reference: reference
       });
 
       await user.save();

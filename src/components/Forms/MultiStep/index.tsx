@@ -1,9 +1,8 @@
-import { SetableContext } from "@/interfaces/setable-context";
-import { createContext, useState } from "react";
-import ContactInfo, { IStep4 } from "../ContactInfo";
-import InstitutionalInfo, { IStep3 } from "../InstitutionalInfo";
-import LoginInfo, { IStep2 } from "../LoginInfo";
-import PersonalInfo, { IStep1 } from "../PersonInfo";
+import { useState } from "react";
+import ContactInfo from "../ContactInfo";
+import InstitutionalInfo from "../InstitutionalInfo";
+import LoginInfo from "../LoginInfo";
+import PersonalInfo from "../PersonInfo";
 import styles from "@/styles/Forms.module.scss";
 import Button from "@/components/core/Button";
 import { setAccessToken } from "@/misc/token";
@@ -17,25 +16,15 @@ import {
   loginInfo,
   personalInfo,
   TValues,
-  validationSchema,
+  validationSchema
 } from "./form-config";
 import Alert from "@/components/core/Alert";
-export interface IHandlers {
-  next?: () => void;
-  previous?: () => void;
-}
-
-export type IRegisterProps = Partial<IStep1 & IStep2 & IStep3 & IStep4>;
-
-export const RegisterContext = createContext<SetableContext<IRegisterProps>>(
-  {}
-);
 
 export type TFormik = Omit<FormikProps<TValues>, "handleSubmit">;
 
 const CurrentStep = ({
   activeStep,
-  formik,
+  formik
 }: {
   activeStep: number;
   formik: TFormik;
@@ -44,7 +33,7 @@ const CurrentStep = ({
     1: <PersonalInfo formik={formik} />,
     2: <LoginInfo formik={formik} />,
     3: <InstitutionalInfo formik={formik} />,
-    4: <ContactInfo formik={formik} />,
+    4: <ContactInfo formik={formik} />
   };
 
   return steps[activeStep];
@@ -52,7 +41,6 @@ const CurrentStep = ({
 
 const MultiStep = () => {
   const [step, setStep] = useState(1);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
 
@@ -86,7 +74,7 @@ const MultiStep = () => {
     initialValues,
     validationSchema,
     validateOnMount: true,
-    onSubmit: submitHandler,
+    onSubmit: submitHandler
   });
 
   const nextStep = () => {
@@ -94,7 +82,7 @@ const MultiStep = () => {
       1: personalInfo,
       2: loginInfo,
       3: institutionalInfo,
-      4: contactInfo,
+      4: contactInfo
     };
 
     const fields = Object.keys(steps[step as 1 | 2 | 3 | 4]);
@@ -121,11 +109,7 @@ const MultiStep = () => {
             Back
           </Button>
           {step === 4 ? (
-            <Button
-              type="submit"
-              disabled={step < 4}
-              onClick={() => console.log("clicked")}
-            >
+            <Button type="submit" disabled={formik.isSubmitting}>
               Sign up
             </Button>
           ) : (

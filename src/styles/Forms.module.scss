@@ -7,13 +7,12 @@
     background-blend-mode: overlay;
     min-height: 100vh;
     background-size: cover;
-    display: grid;
     padding: 10rem 2rem;
-    align-content: space-between;
 
-    p {
+    h1 {
       font-size: 2rem;
       color: white;
+      font-weight: 600;
     }
   }
 
@@ -44,7 +43,24 @@
     }
   }
 }
+
+.back {
+  width: 90%;
+  margin: -10px 0 20px;
+  position: absolute;
+  top: 30px;
+  left: 10px;
+
+  a {
+    color: var(--light-color);
+    display: flex;
+    gap: 10px;
+    width: fit-content;
+  }
+}
+
 .form_container {
+  margin-top: 50px;
   padding: 3rem 0rem;
   width: min(90%, 400px);
   border-radius: 3px;
@@ -106,16 +122,20 @@
       button {
         background-color: transparent;
         font-family: var(--primary-font);
-        font-size: 1rem;
-        margin-top: 4px;
+        font-size: 0.8rem;
+        display: flex;
+        gap: 8px;
+        margin: 8px 0;
         border: none;
-        color: var(--light-color);
+        color: #212121;
         cursor: pointer;
+        text-decoration: underline;
       }
     }
 
     label {
       display: inline-block;
+      margin: 2px 0;
     }
 
     input,
@@ -133,19 +153,6 @@
     .select:focus-within {
       border-color: #0abb87 !important;
     }
-
-    @media (min-width: 768.99px) {
-      label {
-        color: #212121;
-      }
-
-      & > div {
-        button[type="button"] {
-          color: #212121;
-          text-decoration: underline;
-        }
-      }
-    }
   }
 }
 
@@ -156,27 +163,22 @@
   justify-content: space-between;
 
   a {
-    color: #c4c4c4;
+    color: #212121;
     font-size: 12px;
 
     &:last-child {
       text-align: right;
       height: 2rem;
+
       input {
         width: 100%;
         height: 100%;
       }
     }
 
-    @media (min-width: 768.99px) {
-      & {
-        color: #212121;
-
-        &:hover,
-        &:focus {
-          text-decoration: underline;
-        }
-      }
+    &:hover,
+    &:focus {
+      text-decoration: underline;
     }
   }
 }
@@ -197,4 +199,12 @@
       --primary-color-active: #3757be;
     }
   }
+}
+
+.login-button {
+  --primary-color: #5578eb;
+  --primary-color-focus: #4d6dd4;
+  --primary-color-active: #3757be;
+
+  margin: 0.5rem 0;
 }

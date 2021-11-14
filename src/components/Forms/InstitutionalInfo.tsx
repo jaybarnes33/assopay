@@ -1,22 +1,18 @@
-import { IHandlers, RegisterContext, TFormik } from "./MultiStep";
+import { TFormik } from "./MultiStep";
 import styles from "@/styles/Forms.module.scss";
-import Button from "../core/Button";
 
-export interface IStep3 {
-  level: number;
-  hall: string;
-}
+const halls = [
+  "Chamber of Mines Hall",
+  "Kofi Tetteh Hall",
+  "Gold Refinery Hall",
+  "Other"
+];
+
+const campuses = ["Essikado", "Tarkwa Main"];
+const levels = [100, 200, 300, 400];
+
 const InstitutionalInfo = ({ formik }: { formik: TFormik }) => {
   const { values, errors, touched, handleChange } = formik;
-  const halls = [
-    "Chamber of Mines Hall",
-    "Kofi Tetteh Hall",
-    "Gold Refinery Hall",
-    "Other",
-  ];
-
-  const campuses = ["Essikado", "Tarkwa Main"];
-  const levels = [100, 200, 300, 400];
 
   return (
     <div className={styles.inner}>
@@ -92,6 +88,30 @@ const InstitutionalInfo = ({ formik }: { formik: TFormik }) => {
         </select>
         {errors.level && touched.level && (
           <small id="level-message">{errors.level}</small>
+        )}
+      </div>
+      <div className={styles.input}>
+        <label htmlFor="campus">
+          campus <span>*</span>
+        </label>
+        <select
+          id="campus"
+          name="campus"
+          className={styles.input}
+          value={values.campus}
+          onChange={handleChange}
+          aria-describedby="campus-message"
+          required
+        >
+          <option>Select campus</option>
+          {["Esikado", "Tarkwa"].map((campus, index) => (
+            <option value={campus} key={`campus-${index}`}>
+              {campus}
+            </option>
+          ))}
+        </select>
+        {errors.campus && touched.campus && (
+          <small id="campus-message">{errors.campus}</small>
         )}
       </div>
     </div>
