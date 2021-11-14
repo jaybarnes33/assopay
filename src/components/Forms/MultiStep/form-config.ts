@@ -18,6 +18,7 @@ export const contactInfo = {
 };
 
 export const institutionalInfo = {
+  campus: "",
   level: undefined,
   hall: "",
 };
