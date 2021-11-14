@@ -22,7 +22,7 @@ const LoginInfo = ({ formik }: { formik: TFormik }) => {
             id="email"
             name="email"
             type="email"
-            placeholder="Ex. ce-jdoe6020@st.umat.edu.gh"
+            placeholder="Ex. ce-jadoe6020@st.umat.edu.gh"
             value={values.email}
             onChange={handleChange}
             aria-describedby="email-message"
