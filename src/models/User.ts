@@ -65,7 +65,7 @@ const userSchema = new Schema<IUserSchema>({
         },
         amount: {
           type: Number,
-          default: (0)["toFixed"](2) // 0.00
+          default: 0
         },
         reference: {
           type: Schema.Types.Mixed
