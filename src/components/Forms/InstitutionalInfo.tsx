@@ -17,21 +17,20 @@ const InstitutionalInfo = ({ formik }: { formik: TFormik }) => {
   return (
     <div className={styles.inner}>
       <div className={styles.input}>
-        <label htmlFor="hall">
-          Hall <span>*</span>
+        <label htmlFor="campus">
+          campus <span>*</span>
         </label>
-        <br />
         <select
-          id="hall"
-          value={values.campus}
-          className={styles.input}
+          id="campus"
           name="campus"
-          required
+          className={styles.input}
+          value={values.campus}
           onChange={handleChange}
           aria-describedby="campus-message"
+          required
         >
-          <option>Select Campus</option>
-          {campuses.map((campus, index) => (
+          <option>Select campus</option>
+          {["Essikado", "Tarkwa"].map((campus, index) => (
             <option value={campus} key={`campus-${index}`}>
               {campus}
             </option>
@@ -88,30 +87,6 @@ const InstitutionalInfo = ({ formik }: { formik: TFormik }) => {
         </select>
         {errors.level && touched.level && (
           <small id="level-message">{errors.level}</small>
-        )}
-      </div>
-      <div className={styles.input}>
-        <label htmlFor="campus">
-          campus <span>*</span>
-        </label>
-        <select
-          id="campus"
-          name="campus"
-          className={styles.input}
-          value={values.campus}
-          onChange={handleChange}
-          aria-describedby="campus-message"
-          required
-        >
-          <option>Select campus</option>
-          {["Esikado", "Tarkwa"].map((campus, index) => (
-            <option value={campus} key={`campus-${index}`}>
-              {campus}
-            </option>
-          ))}
-        </select>
-        {errors.campus && touched.campus && (
-          <small id="campus-message">{errors.campus}</small>
         )}
       </div>
     </div>
