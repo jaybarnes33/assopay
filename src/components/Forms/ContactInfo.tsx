@@ -1,10 +1,6 @@
 import { TFormik } from "./MultiStep";
 import styles from "@/styles/Forms.module.scss";
 
-export interface IStep4 {
-  phone?: string;
-}
-
 const ContactInfo = ({ formik }: { formik: TFormik }) => {
   const { values, errors, touched, handleChange } = formik;
 

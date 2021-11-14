@@ -13,12 +13,12 @@ export interface IUserSchema extends Document {
   lastName: string;
   email: string;
   hall?: string;
-  campus: string;
   username: string;
   password: string;
   otherNames: string;
   level: number;
   dues: Array<IDues>;
+  campus: string;
 }
 
 const userSchema = new Schema<IUserSchema>({
@@ -72,7 +72,8 @@ const userSchema = new Schema<IUserSchema>({
         }
       })
     }
-  ]
+  ],
+  campus: { type: String, required: true }
 });
 
 userSchema.pre("save", async function (next) {

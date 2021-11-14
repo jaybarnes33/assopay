@@ -18,6 +18,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         hall,
         phone,
         gender,
+        campus,
       } = req.body;
       await dbConnect();
 
@@ -36,8 +37,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           hall,
           phone,
           gender,
+          campus,
         });
-        user.dues = [];
+
         await user.save();
         res.status(201).json(user);
       } else {

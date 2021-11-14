@@ -8,6 +8,7 @@ const halls = [
   "Other"
 ];
 
+const campuses = ["Essikado", "Tarkwa Main"];
 const levels = [100, 200, 300, 400];
 
 const InstitutionalInfo = ({ formik }: { formik: TFormik }) => {
@@ -15,6 +16,31 @@ const InstitutionalInfo = ({ formik }: { formik: TFormik }) => {
 
   return (
     <div className={styles.inner}>
+      <div className={styles.input}>
+        <label htmlFor="hall">
+          Hall <span>*</span>
+        </label>
+        <br />
+        <select
+          id="hall"
+          value={values.campus}
+          className={styles.input}
+          name="campus"
+          required
+          onChange={handleChange}
+          aria-describedby="campus-message"
+        >
+          <option>Select Campus</option>
+          {campuses.map((campus, index) => (
+            <option value={campus} key={`campus-${index}`}>
+              {campus}
+            </option>
+          ))}
+        </select>
+        {errors.campus && touched.campus && (
+          <small id="campus-message">{errors.campus}</small>
+        )}
+      </div>
       <div className={styles.input}>
         <label htmlFor="hall">
           Hall <span>*</span>
