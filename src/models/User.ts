@@ -1,9 +1,9 @@
-import mongoose, { Document, Types } from "mongoose";
+import mongoose, { Document, Schema } from "mongoose";
 import bcrypt from "bcryptjs";
 
 interface IDues {
   year: string;
-  amout: string;
+  amount: string;
   reference: Record<string, string | number>;
 }
 export interface IUserSchema extends Document {
@@ -13,6 +13,7 @@ export interface IUserSchema extends Document {
   lastName: string;
   email: string;
   hall?: string;
+  campus: string;
   username: string;
   password: string;
   otherNames: string;
@@ -20,40 +21,58 @@ export interface IUserSchema extends Document {
   dues: Array<IDues>;
 }
 
-const userSchema = new mongoose.Schema<IUserSchema>({
+const userSchema = new Schema<IUserSchema>({
   firstName: {
     type: String,
-    required: true,
+    required: true
   },
   lastName: {
     type: String,
-    required: true,
+    required: true
   },
   otherNames: {
-    type: String,
+    type: String
   },
   hall: {
-    type: String,
+    type: String
   },
   password: {
     type: String,
     min: 8,
-    required: true,
+    required: true
   },
   email: {
     type: String,
     unique: true,
-    required: true,
+    required: true
   },
   level: {
     type: Number,
-    required: true,
+    required: true
   },
   gender: {
-    type: String,
+    type: String
   },
   phone: { type: String },
-  dues: [],
+  dues: [
+    {
+      type: new Schema({
+        year: {
+          type: String,
+          default: `${new Date().getFullYear()} - ${
+            new Date().getFullYear() + 1
+          }`
+        },
+        amount: {
+          type: Number,
+          default: (0)["toFixed"](2) // 0.00
+        },
+        reference: {
+          type: Schema.Types.Subdocument
+        }
+      })
+    }
+  ]
 });
 
 userSchema.pre("save", async function (next) {
@@ -69,4 +88,5 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
 };
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
+
 export default User;

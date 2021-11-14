@@ -25,7 +25,7 @@ const handler = async (
         email,
         image,
         country,
-        bgImage,
+        bgImage
       } = req.body;
 
       user.username = username || user.username;

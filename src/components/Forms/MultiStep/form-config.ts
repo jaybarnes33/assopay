@@ -4,29 +4,30 @@ export const personalInfo = {
   firstName: "",
   lastName: "",
   otherNames: "",
-  gender: "",
+  gender: ""
 };
 
 export const loginInfo = {
   email: "",
   password: "",
-  confirmPassword: "",
+  confirmPassword: ""
 };
 
 export const contactInfo = {
-  phone: "",
+  phone: ""
 };
 
 export const institutionalInfo = {
   level: undefined,
   hall: "",
+  campus: ""
 };
 
 export const initialValues = {
   ...personalInfo,
   ...loginInfo,
   ...contactInfo,
-  ...institutionalInfo,
+  ...institutionalInfo
 };
 
 export type TValues = Omit<typeof initialValues, "level"> & { level?: number };
@@ -52,5 +53,6 @@ export const validationSchema = Yup.object({
     .label("Confirm Password"),
   level: Yup.string().required().label("Level"),
   hall: Yup.string().required().label("Hall"),
-  phone: Yup.string().required().length(10).label("Phone Number"),
+  campus: Yup.string().required().label("Campus"),
+  phone: Yup.string().required().length(10).label("Phone Number")
 });
