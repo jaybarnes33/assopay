@@ -1,11 +1,6 @@
 import { TFormik } from "./MultiStep";
 import styles from "@/styles/Forms.module.scss";
 
-export interface IStep3 {
-  level: number;
-  hall: string;
-}
-
 const InstitutionalInfo = ({ formik }: { formik: TFormik }) => {
   const { values, errors, touched, handleChange } = formik;
   const halls = [

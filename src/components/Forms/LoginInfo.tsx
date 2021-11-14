@@ -1,12 +1,6 @@
 import styles from "@/styles/Forms.module.scss";
 import { TFormik } from "./MultiStep";
 
-export interface IStep2 {
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
-
 const LoginInfo = ({ formik }: { formik: TFormik }) => {
   const { values, errors, touched, handleChange } = formik;
 
