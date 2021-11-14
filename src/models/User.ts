@@ -18,6 +18,7 @@ export interface IUserSchema extends Document {
   otherNames: string;
   level: number;
   dues: Array<IDues>;
+  campus: string;
 }
 
 const userSchema = new mongoose.Schema<IUserSchema>({
@@ -54,6 +55,7 @@ const userSchema = new mongoose.Schema<IUserSchema>({
   },
   phone: { type: String },
   dues: [],
+  campus: { type: String, required: true },
 });
 
 userSchema.pre("save", async function (next) {
