@@ -1,13 +1,6 @@
 import styles from "@/styles/Forms.module.scss";
 import { TFormik } from "./MultiStep";
 
-export interface IStep1 {
-  gender?: string;
-  firstName: string;
-  lastName: string;
-  otherNames: string;
-}
-
 const PersonalInfo = ({ formik }: { formik: TFormik }) => {
   const { values, errors, touched, handleChange } = formik;
 
