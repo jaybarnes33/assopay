@@ -68,7 +68,7 @@ const userSchema = new Schema<IUserSchema>({
           default: (0)["toFixed"](2) // 0.00
         },
         reference: {
-          type: Schema.Types.Subdocument
+          type: Schema.Types.Mixed
         }
       })
     }
