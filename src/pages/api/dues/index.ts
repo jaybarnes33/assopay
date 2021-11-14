@@ -25,7 +25,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       console.log(user.phone);
       await sendSms(
         user.phone,
-        `Hi, ${user.firstName} ${user.lastName} Your dues have been paid successfully. ${reference.reference} is your transaction reference. Please show this message before you register`
+        `Hi ${user.firstName} ${user.lastName}, Your dues have been paid successfully. ${reference.reference} is your transaction reference. Please show this message before you register`
       );
 
       res.status(202).json({ user });
