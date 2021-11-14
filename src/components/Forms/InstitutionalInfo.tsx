@@ -18,19 +18,20 @@ const InstitutionalInfo = ({ formik }: { formik: TFormik }) => {
     <div className={styles.inner}>
       <div className={styles.input}>
         <label htmlFor="campus">
-          campus <span>*</span>
+          Campus <span>*</span>
         </label>
+        <br />
         <select
           id="campus"
-          name="campus"
-          className={styles.input}
           value={values.campus}
+          className={styles.input}
+          name="campus"
+          required
           onChange={handleChange}
           aria-describedby="campus-message"
-          required
         >
-          <option>Select campus</option>
-          {["Essikado", "Tarkwa"].map((campus, index) => (
+          <option>Select Campus</option>
+          {campuses.map((campus, index) => (
             <option value={campus} key={`campus-${index}`}>
               {campus}
             </option>
