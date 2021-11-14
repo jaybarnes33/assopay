@@ -32,7 +32,7 @@ const Dues = () => {
     publicKey:
       process.env.NEXT_PUBLIC_ENV === "production"
         ? "pk_live_4f77f76738fd6becf0a144ab06fa7e614e779868"
-        : "pk_test_416cb666b87d1627e714824ceb3fc4e9ff3e6acc",
+        : "pk_test_416cb666b87d1627e714824ceb3fc4e9ff3e6acc"
   });
 
   console.log(isPaid(user?.dues));
@@ -40,7 +40,7 @@ const Dues = () => {
   const onSuccess = async (reference: Function) => {
     await makeSecuredRequest("/api/dues", "POST", {
       amount,
-      reference,
+      reference
     });
     console.log(reference);
   };
@@ -66,17 +66,17 @@ const Dues = () => {
         </div>
 
         <div className={styles.buttons}>
-          {!isPaid(user?.dues) && (
-            <Button
-              onClick={() => initializePayment(onSuccess, onClose)}
-              className={joinClasses(
-                buttonStyles.button,
-                buttonStyles["button-main-light"]
-              )}
-            >
-              Pay Dues
-            </Button>
-          )}
+          {/* {!isPaid(user?.dues) && ( */}
+          <Button
+            onClick={() => initializePayment(onSuccess, onClose)}
+            className={joinClasses(
+              buttonStyles.button,
+              buttonStyles["button-main-light"]
+            )}
+          >
+            Pay Dues
+          </Button>
+          {/* )} */}
         </div>
       </section>
     </div>
