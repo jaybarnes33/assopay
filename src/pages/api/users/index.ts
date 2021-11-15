@@ -6,7 +6,7 @@ import getUserID from "@/utils/get-userID";
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     await dbConnect();
-
+    const keyword = req.query.keyword;
     const token = req.headers.authorization?.split(" ")[1] || "";
 
     const userID = getUserID(token);
@@ -14,9 +14,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const user = await User.findById(userID).select("-password");
 
-    if (!user) return res.status(400).end("User not found");
-
-    res.json(user);
+    if (user.isAdmin) {
+      const users = keyword
+        ? await User.find({
+            $text: { $search: String(keyword) }
+          }).select("-password")
+        : await User.find({}).select("-password");
+      res.status(200).json(users);
+    } else {
+      res.status(400).json("Only Admin");
+    }
   } catch (error) {
     console.log(error);
     res.status(500).end("Something went wrong");
