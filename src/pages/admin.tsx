@@ -42,7 +42,7 @@ const Admin = () => {
               <td>{user.name}</td>
               <td>{user.level}</td>
               <td>{user.campus}</td>
-              <td>✔</td>
+              <td>{user.paid ? "✔" : "❌"}</td>
             </tr>
           ))}
         </tbody>
