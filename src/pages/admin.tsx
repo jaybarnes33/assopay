@@ -1,16 +1,55 @@
 import useUser from "@/hooks/useUser";
+import { IUserSchema } from "@/models/User";
+import makeSecuredRequest from "@/utils/makeSecuredRequest";
 import router from "next/router";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import useSWR from "swr";
+import { TUser } from "./api/users";
+
 const Admin = () => {
   const { user } = useUser();
+  const {
+    data: users,
+    error,
+    mutate
+  } = useSWR<TUser[]>(["/api/users", "GET"], makeSecuredRequest);
+
   useEffect(() => {
-    if (!user.isAdmin) {
+    if (user && !user.isAdmin) {
       router.push("/");
-    }else{
-        
     }
-  });
-  return <div></div>;
+  }, [user]);
+
+  console.log(users);
+
+  return (
+    <main>
+      <div>
+        <h2>Students</h2>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Level</th>
+            <th>Campus</th>
+            <th>Paid</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users?.map(user => (
+            <tr key={user._id}>
+              <td>{user.name}</td>
+              <td>{user.level}</td>
+              <td>{user.campus}</td>
+              <td>✔</td>
+            </tr>
+          ))}
+        </tbody>
+        <tfoot></tfoot>
+      </table>
+    </main>
+  );
 };
 
 export default Admin;

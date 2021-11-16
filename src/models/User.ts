@@ -6,6 +6,7 @@ interface IDues {
   amount: string;
   reference: Record<string, string | number>;
 }
+
 export interface IUserSchema extends Document {
   gender?: string;
   phone?: string;
@@ -19,7 +20,7 @@ export interface IUserSchema extends Document {
   level: number;
   dues: Array<IDues>;
   campus: string;
-  isAdmin: true | false;
+  isAdmin: boolean;
 }
 
 const userSchema = new Schema<IUserSchema>({
@@ -94,6 +95,8 @@ userSchema.pre("save", async function (next) {
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
+
+userSchema.index({ "$**": "text" });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 
