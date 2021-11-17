@@ -1,15 +1,15 @@
 import { TFormik } from "./MultiStep";
 import styles from "@/styles/Forms.module.scss";
 
-const halls = [
+export const halls = [
   "Chamber of Mines Hall",
   "Kofi Tetteh Hall",
   "Gold Refinery Hall",
   "Other"
 ];
 
-const campuses = ["Essikado", "Tarkwa Main"];
-const levels = [100, 200, 300, 400];
+export const campuses = ["Essikado", "Tarkwa Main"];
+export const levels = [100, 200, 300, 400];
 
 const InstitutionalInfo = ({ formik }: { formik: TFormik }) => {
   const { values, errors, touched, handleChange } = formik;
