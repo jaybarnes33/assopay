@@ -19,6 +19,7 @@ export interface IUserSchema extends Document {
   level: number;
   dues: Array<IDues>;
   campus: string;
+  isAdmin: true | false;
 }
 
 const userSchema = new Schema<IUserSchema>({
@@ -67,12 +68,18 @@ const userSchema = new Schema<IUserSchema>({
           type: Number,
           default: 0
         },
+
         reference: {
           type: Schema.Types.Mixed
         }
       })
     }
   ],
+  isAdmin: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
   campus: { type: String, required: true }
 });
 
