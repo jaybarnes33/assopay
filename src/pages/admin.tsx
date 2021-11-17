@@ -2,18 +2,28 @@ import useUser from "@/hooks/useUser";
 import makeSecuredRequest from "@/utils/makeSecuredRequest";
 import router from "next/router";
 import useSWR from "swr";
+import styles from "@/styles/Admin.module.scss";
 import { campuses, halls } from "@/components/Forms/InstitutionalInfo";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TUser } from "./api/users";
 import { slugify } from "@/utils/slugify";
 
 const Admin = () => {
+  const inputRef = useRef<HTMLInputElement>(null);
   const { user } = useUser();
+  const [keyword, setKeyword] = useState("");
+  const [filters, setFilters] = useState<Record<string, (string | number)[]>>(
+    {}
+  );
+
   const {
     data: users,
     error,
     mutate
-  } = useSWR<TUser[]>(["/api/users", "GET"], makeSecuredRequest);
+  } = useSWR<TUser[]>(
+    [`/api/users?keyword=${keyword}&filters=${JSON.stringify(filters)}`, "GET"],
+    makeSecuredRequest
+  );
 
   useEffect(() => {
     if (user && !user.isAdmin) {
@@ -21,7 +31,47 @@ const Admin = () => {
     }
   }, [user]);
 
-  console.log(users);
+  const handleSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setKeyword(event.target.value);
+  };
+
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLFormElement>) => {
+    const { id, value, checked } = event.target;
+    const copiedFilters: Record<string, (string | number)[]> = Object.keys(
+      filters
+    ).length
+      ? { level: [], campus: [], payment: [], ...filters }
+      : {
+          level: [],
+          campus: [],
+          payment: []
+        };
+
+    Object.keys(copiedFilters).forEach(key => {
+      const field = copiedFilters[key];
+
+      if (id.includes(key)) {
+        checked ? field.push(value) : field.splice(field.indexOf(value), 1);
+      }
+    });
+
+    console.log(value, copiedFilters);
+
+    const newEntries = Object.entries(copiedFilters)
+      .map(([key, value]) => {
+        if (!value.length) {
+          return undefined;
+        }
+
+        return [key, value];
+      })
+      .filter(Boolean) as [string, string[]][];
+
+    console.log(newEntries);
+
+    const newFilters = Object.fromEntries(newEntries);
+    setFilters(newFilters);
+  };
 
   return (
     <main>
@@ -33,76 +83,97 @@ const Admin = () => {
           id="search-input"
           aria-label="search"
           placeholder="search"
+          onChange={handleSearchInput}
         />
       </div>
       <section id="filters" aria-labelledby="filter-by">
         <h2 id="filter-by">Filter By</h2>
-        <ul>
-          <li id="level">
-            <p>Level</p>
-            <ul>
-              <li>
-                <label htmlFor="first-year">100</label>
-                <input type="checkbox" name="first-year" id="first-year" />
-              </li>
-              <li>
-                <label htmlFor="second-year">200</label>
-                <input type="checkbox" name="second-year" id="second-year" />
-              </li>
-              <li>
-                <label htmlFor="third-year">300</label>
-                <input type="checkbox" name="third-year" id="third-year" />
-              </li>
-              <li>
-                <label htmlFor="fourth-year">400</label>
-                <input type="checkbox" name="fourth-year" id="fourth-year" />
-              </li>
-            </ul>
-          </li>
-          <li id="hall">
-            <p>Hall</p>
-            <ul>
-              {halls.map(hall => (
-                <li key={hall}>
-                  <label htmlFor={slugify(hall)}>{hall}</label>
+        <form onChange={handleCheckboxChange}>
+          <ul id="filter-by-field" className={styles.fields}>
+            <li id="level">
+              <p>Level</p>
+              <ul>
+                <li>
+                  <label htmlFor="level-1">100</label>
                   <input
                     type="checkbox"
-                    name={slugify(hall)}
-                    id={slugify(hall)}
+                    name="first-year"
+                    value={100}
+                    id="level-1"
                   />
                 </li>
-              ))}
-            </ul>
-          </li>
-          <li id="campus">
-            <p>Campus</p>
-            <ul>
-              {campuses.map(campus => (
-                <li key={campus}>
-                  <label htmlFor={slugify(campus)}>{campus}</label>
+                <li>
+                  <label htmlFor="level-2">200</label>
                   <input
                     type="checkbox"
-                    name={slugify(campus)}
-                    id={slugify(campus)}
+                    name="second-year"
+                    value={200}
+                    id="level-2"
                   />
                 </li>
-              ))}
-            </ul>
-          </li>
-          <li id="payment-status">
-            <p>Payment status</p>
-            <ul>
-              <li>
-                <label htmlFor="paid">Paid</label>
-                <input id="paid" name="paid" type="checkbox" />
-              </li>
-              <li>
-                <label htmlFor="not-paid">Not Paid</label>
-                <input id="not-paid" name="not-paid" type="checkbox" />
-              </li>
-            </ul>
-          </li>
-        </ul>
+                <li>
+                  <label htmlFor="level-3">300</label>
+                  <input
+                    type="checkbox"
+                    name="third-year"
+                    value={300}
+                    id="level-3"
+                  />
+                </li>
+                <li>
+                  <label htmlFor="level-4">400</label>
+                  <input
+                    type="checkbox"
+                    name="fourth-year"
+                    value={400}
+                    id="level-4"
+                  />
+                </li>
+              </ul>
+            </li>
+            <li id="campus">
+              <p>Campus</p>
+              <ul>
+                {campuses.map(campus => (
+                  <li key={campus}>
+                    <label htmlFor={`${slugify(campus)}-campus`}>
+                      {campus}
+                    </label>
+                    <input
+                      type="checkbox"
+                      name={slugify(campus)}
+                      value={campus}
+                      id={`${slugify(campus)}-campus`}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </li>
+            <li id="payment-status">
+              <p>Payment status</p>
+              <ul>
+                <li>
+                  <label htmlFor="payment-paid">Paid</label>
+                  <input
+                    id="payment-paid"
+                    name="paid"
+                    type="checkbox"
+                    value={1}
+                  />
+                </li>
+                <li>
+                  <label htmlFor="payment-paid-not-paid">Not Paid</label>
+                  <input
+                    id="payment-paid-not-paid"
+                    name="not-paid"
+                    type="checkbox"
+                    value={0}
+                  />
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </form>
       </section>
       <table>
         <thead>

@@ -11,7 +11,7 @@ export type TUser = Pick<IUserSchema, "_id" | "level" | "campus"> & {
 const handler = async (req: NextApiRequest, res: NextApiResponse<TUser[]>) => {
   try {
     await dbConnect();
-    const { keyword, limit = 10, page = 1 } = req.query;
+    const { keyword, limit = 10, page = 1, filters } = req.query;
     const token = req.headers.authorization?.split(" ")[1] || "";
 
     const userID = getUserID(token);
@@ -51,9 +51,26 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<TUser[]>) => {
       .limit(limit as number)
       .skip((Number(page) - 1) * Number(limit));
 
+    const parsedFilters = JSON.parse(filters as string);
+    const filteredUsers = users?.filter(user => {
+      if (
+        parsedFilters.level?.map((v: string) => +v).includes(user.level) ||
+        parsedFilters.campus?.includes(user.campus) ||
+        parsedFilters.payment
+          ?.map((v: string) => Boolean(+v))
+          .includes(user.paid)
+      ) {
+        return user;
+      }
+    });
+
+    const finalUsers = Object.keys(parsedFilters).length
+      ? filteredUsers
+      : users;
+
     res
       .status(200)
-      .json(users.map(user => ({ ...user, name: user.name.trim() })));
+      .json(finalUsers.map(user => ({ ...user, name: user.name.trim() })));
   } catch (error) {
     console.log(error);
     res.status(500).end("Something went wrong");
