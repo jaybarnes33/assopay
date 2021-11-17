@@ -8,10 +8,14 @@ export type TUser = Pick<IUserSchema, "_id" | "level" | "campus"> & {
   paid: boolean;
 };
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<TUser[]>) => {
+const handler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<{ users: TUser[]; hasMore: boolean }>
+) => {
   try {
     await dbConnect();
     const { keyword, limit = 10, page = 1, filters } = req.query;
+    const skip = (Number(page) - 1) * Number(limit);
     const token = req.headers.authorization?.split(" ")[1] || "";
 
     const userID = getUserID(token);
@@ -49,7 +53,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<TUser[]>) => {
         }
       })
       .limit(limit as number)
-      .skip((Number(page) - 1) * Number(limit));
+      .skip(skip)
+      .sort("level");
+
+    const total = await User.find().countDocuments();
+    const hasMore = total > skip + Number(limit);
 
     const parsedFilters = JSON.parse(filters as string);
     const filteredUsers = users?.filter(user => {
@@ -68,9 +76,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<TUser[]>) => {
       ? filteredUsers
       : users;
 
-    res
-      .status(200)
-      .json(finalUsers.map(user => ({ ...user, name: user.name.trim() })));
+    const result = {
+      users: finalUsers.map(user => ({ ...user, name: user.name.trim() })),
+      hasMore
+    };
+
+    res.status(200).json(result);
   } catch (error) {
     console.log(error);
     res.status(500).end("Something went wrong");

@@ -16,14 +16,13 @@ const Admin = () => {
     {}
   );
 
-  const {
-    data: users,
-    error,
-    mutate
-  } = useSWR<TUser[]>(
+  const { data, error, mutate } = useSWR<{ users: TUser[]; hasMore: boolean }>(
     [`/api/users?keyword=${keyword}&filters=${JSON.stringify(filters)}`, "GET"],
     makeSecuredRequest
   );
+
+  const users = data?.users;
+  const hasMore = data?.hasMore;
 
   useEffect(() => {
     if (user && !user.isAdmin) {
@@ -74,9 +73,9 @@ const Admin = () => {
   };
 
   return (
-    <main>
+    <main className={styles.main}>
       <h1>Students</h1>
-      <div id="search">
+      <div id="search" className={styles.search}>
         <input
           type="search"
           name="search"
@@ -86,7 +85,11 @@ const Admin = () => {
           onChange={handleSearchInput}
         />
       </div>
-      <section id="filters" aria-labelledby="filter-by">
+      <section
+        id="filters"
+        className={styles.filters}
+        aria-labelledby="filter-by"
+      >
         <h2 id="filter-by">Filter By</h2>
         <form onChange={handleCheckboxChange}>
           <ul id="filter-by-field" className={styles.fields}>
@@ -94,40 +97,40 @@ const Admin = () => {
               <p>Level</p>
               <ul>
                 <li>
-                  <label htmlFor="level-1">100</label>
                   <input
                     type="checkbox"
                     name="first-year"
                     value={100}
                     id="level-1"
                   />
+                  <label htmlFor="level-1">100</label>
                 </li>
                 <li>
-                  <label htmlFor="level-2">200</label>
                   <input
                     type="checkbox"
                     name="second-year"
                     value={200}
                     id="level-2"
                   />
+                  <label htmlFor="level-2">200</label>
                 </li>
                 <li>
-                  <label htmlFor="level-3">300</label>
                   <input
                     type="checkbox"
                     name="third-year"
                     value={300}
                     id="level-3"
                   />
+                  <label htmlFor="level-3">300</label>
                 </li>
                 <li>
-                  <label htmlFor="level-4">400</label>
                   <input
                     type="checkbox"
                     name="fourth-year"
                     value={400}
                     id="level-4"
                   />
+                  <label htmlFor="level-4">400</label>
                 </li>
               </ul>
             </li>
@@ -136,15 +139,15 @@ const Admin = () => {
               <ul>
                 {campuses.map(campus => (
                   <li key={campus}>
-                    <label htmlFor={`${slugify(campus)}-campus`}>
-                      {campus}
-                    </label>
                     <input
                       type="checkbox"
                       name={slugify(campus)}
                       value={campus}
                       id={`${slugify(campus)}-campus`}
                     />
+                    <label htmlFor={`${slugify(campus)}-campus`}>
+                      {campus}
+                    </label>
                   </li>
                 ))}
               </ul>
@@ -153,29 +156,29 @@ const Admin = () => {
               <p>Payment status</p>
               <ul>
                 <li>
-                  <label htmlFor="payment-paid">Paid</label>
                   <input
                     id="payment-paid"
                     name="paid"
                     type="checkbox"
                     value={1}
                   />
+                  <label htmlFor="payment-paid">Paid</label>
                 </li>
                 <li>
-                  <label htmlFor="payment-paid-not-paid">Not Paid</label>
                   <input
                     id="payment-paid-not-paid"
                     name="not-paid"
                     type="checkbox"
                     value={0}
                   />
+                  <label htmlFor="payment-paid-not-paid">Not Paid</label>
                 </li>
               </ul>
             </li>
           </ul>
         </form>
       </section>
-      <table>
+      <table className={styles.table}>
         <thead>
           <tr>
             <th>Student Name</th>
