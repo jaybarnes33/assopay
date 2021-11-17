@@ -1,0 +1,16 @@
+.fields {
+  display: flex;
+  justify-content: space-evenly;
+  list-style-type: none;
+
+  p {
+    font-size: 0.875rem;
+    color: #001d00c7;
+  }
+
+  ul {
+    display: flex;
+    list-style-type: none;
+    gap: 2rem;
+  }
+}
