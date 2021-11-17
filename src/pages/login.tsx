@@ -96,7 +96,7 @@ const Login = () => {
                     name="email"
                     required
                     onChange={handleChange}
-                    placeholder="Please enter your student email"
+                    placeholder="Ex. ce-jadoe6020@st.umat.edu.gh"
                   />
                 </div>
                 <div className={styles.input}>
