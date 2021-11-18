@@ -10,7 +10,7 @@ export type TUser = Pick<IUserSchema, "_id" | "level" | "campus"> & {
 
 const handler = async (
   req: NextApiRequest,
-  res: NextApiResponse<{ users: TUser[]; hasMore: boolean }>
+  res: NextApiResponse<{ users: TUser[]; hasMore: boolean; total: number }>
 ) => {
   try {
     await dbConnect();
@@ -52,7 +52,7 @@ const handler = async (
           ]
         }
       })
-      .limit(limit as number)
+      .limit(Number(limit))
       .skip(skip)
       .sort("level");
 
@@ -78,7 +78,8 @@ const handler = async (
 
     const result = {
       users: finalUsers.map(user => ({ ...user, name: user.name.trim() })),
-      hasMore
+      hasMore,
+      total
     };
 
     res.status(200).json(result);
