@@ -3,25 +3,37 @@ import makeSecuredRequest from "@/utils/makeSecuredRequest";
 import router from "next/router";
 import useSWR from "swr";
 import styles from "@/styles/Admin.module.scss";
-import { campuses, halls } from "@/components/Forms/InstitutionalInfo";
-import { useEffect, useRef, useState } from "react";
+import { campuses } from "@/components/Forms/InstitutionalInfo";
+import { useEffect, useState } from "react";
 import { TUser } from "./api/users";
 import { slugify } from "@/utils/slugify";
+import Button from "@/components/core/Button";
 
 const Admin = () => {
-  const inputRef = useRef<HTMLInputElement>(null);
   const { user } = useUser();
   const [keyword, setKeyword] = useState("");
+  const [page, setPage] = useState(1);
+  const [limitPerPage, setLimitPerPage] = useState(10);
   const [filters, setFilters] = useState<Record<string, (string | number)[]>>(
     {}
   );
 
-  const { data, error, mutate } = useSWR<{ users: TUser[]; hasMore: boolean }>(
-    [`/api/users?keyword=${keyword}&filters=${JSON.stringify(filters)}`, "GET"],
+  const { data, error, mutate } = useSWR<{
+    users: TUser[];
+    hasMore: boolean;
+    total: number;
+  }>(
+    [
+      `/api/users?keyword=${keyword}&filters=${JSON.stringify(
+        filters
+      )}&page=${page}&limit=${limitPerPage}`,
+      "GET"
+    ],
     makeSecuredRequest
   );
 
   const users = data?.users;
+  const total = data?.total;
   const hasMore = data?.hasMore;
 
   useEffect(() => {
@@ -54,8 +66,6 @@ const Admin = () => {
       }
     });
 
-    console.log(value, copiedFilters);
-
     const newEntries = Object.entries(copiedFilters)
       .map(([key, value]) => {
         if (!value.length) {
@@ -66,10 +76,20 @@ const Admin = () => {
       })
       .filter(Boolean) as [string, string[]][];
 
-    console.log(newEntries);
-
     const newFilters = Object.fromEntries(newEntries);
     setFilters(newFilters);
+  };
+
+  const handleChangeSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setLimitPerPage(+event.target.value);
+  };
+
+  const next = () => {
+    hasMore && setPage(page + 1);
+  };
+
+  const prev = () => {
+    page > 1 && setPage(page - 1);
   };
 
   return (
@@ -193,12 +213,58 @@ const Admin = () => {
               <td>{user.name}</td>
               <td>{user.level}</td>
               <td>{user.campus}</td>
-              <td>{user.paid ? "✔" : "❌"}</td>
+              <td className={user.paid ? "green" : undefined}>
+                {user.paid ? "✔" : "❌"}
+              </td>
             </tr>
           ))}
         </tbody>
-        <tfoot></tfoot>
+        <tfoot>
+          <div>
+            <Button
+              variant="outlined"
+              onClick={prev}
+              disabled={page <= 1}
+              className={styles.button}
+            >
+              Previous
+            </Button>
+          </div>
+          <div id="table-config" className={styles.config}>
+            <div>
+              <span>{users?.length}</span>/<span>{total}</span>
+            </div>
+            <div>
+              <select
+                name="limit-per-page"
+                id="limit-per-page"
+                onChange={handleChangeSelect}
+              >
+                {[1, 2, 3, 4, 5].map(op => (
+                  <option key={op} value={op * 10}>
+                    {op * 10}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div>
+            <Button
+              variant="outlined"
+              onClick={next}
+              disabled={!hasMore}
+              className={styles.button}
+            >
+              Next
+            </Button>
+          </div>
+        </tfoot>
       </table>
+      <style jsx>{`
+        .green {
+          color: var(--primary-color);
+        }
+      `}</style>
     </main>
   );
 };

@@ -88,4 +88,24 @@
       text-align: left;
     }
   }
+
+  tfoot {
+    width: 100%;
+    border: 1px solid grey;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .config {
+      display: flex;
+      gap: 1rem;
+    }
+  }
+}
+
+.button {
+  padding: 4px 8px;
+  text-transform: lowercase;
+  font-weight: 400;
 }
