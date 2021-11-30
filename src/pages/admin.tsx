@@ -3,27 +3,38 @@ import makeSecuredRequest from "@/utils/makeSecuredRequest";
 import router from "next/router";
 import useSWR from "swr";
 import styles from "@/styles/Admin.module.scss";
-import { campuses, halls } from "@/components/Forms/InstitutionalInfo";
-import { useEffect, useRef, useState } from "react";
+import { campuses } from "@/components/Forms/InstitutionalInfo";
+import { useEffect, useState } from "react";
 import { TUser } from "./api/users";
 import { slugify } from "@/utils/slugify";
+import Button from "@/components/core/Button";
 
 const Admin = () => {
-  const inputRef = useRef<HTMLInputElement>(null);
   const { user } = useUser();
   const [keyword, setKeyword] = useState("");
+  const [page, setPage] = useState(1);
+  const [limitPerPage, setLimitPerPage] = useState(10);
   const [filters, setFilters] = useState<Record<string, (string | number)[]>>(
     {}
   );
 
-  const {
-    data: users,
-    error,
-    mutate
-  } = useSWR<TUser[]>(
-    [`/api/users?keyword=${keyword}&filters=${JSON.stringify(filters)}`, "GET"],
+  const { data, error, mutate } = useSWR<{
+    users: TUser[];
+    hasMore: boolean;
+    total: number;
+  }>(
+    [
+      `/api/users?keyword=${keyword}&filters=${JSON.stringify(
+        filters
+      )}&page=${page}&limit=${limitPerPage}`,
+      "GET"
+    ],
     makeSecuredRequest
   );
+
+  const users = data?.users;
+  const total = data?.total;
+  const hasMore = data?.hasMore;
 
   useEffect(() => {
     if (user && !user.isAdmin) {
@@ -55,8 +66,6 @@ const Admin = () => {
       }
     });
 
-    console.log(value, copiedFilters);
-
     const newEntries = Object.entries(copiedFilters)
       .map(([key, value]) => {
         if (!value.length) {
@@ -67,16 +76,26 @@ const Admin = () => {
       })
       .filter(Boolean) as [string, string[]][];
 
-    console.log(newEntries);
-
     const newFilters = Object.fromEntries(newEntries);
     setFilters(newFilters);
   };
 
+  const handleChangeSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setLimitPerPage(+event.target.value);
+  };
+
+  const next = () => {
+    hasMore && setPage(page + 1);
+  };
+
+  const prev = () => {
+    page > 1 && setPage(page - 1);
+  };
+
   return (
-    <main>
+    <main className={styles.main}>
       <h1>Students</h1>
-      <div id="search">
+      <div id="search" className={styles.search}>
         <input
           type="search"
           name="search"
@@ -86,7 +105,11 @@ const Admin = () => {
           onChange={handleSearchInput}
         />
       </div>
-      <section id="filters" aria-labelledby="filter-by">
+      <section
+        id="filters"
+        className={styles.filters}
+        aria-labelledby="filter-by"
+      >
         <h2 id="filter-by">Filter By</h2>
         <form onChange={handleCheckboxChange}>
           <ul id="filter-by-field" className={styles.fields}>
@@ -94,40 +117,40 @@ const Admin = () => {
               <p>Level</p>
               <ul>
                 <li>
-                  <label htmlFor="level-1">100</label>
                   <input
                     type="checkbox"
                     name="first-year"
                     value={100}
                     id="level-1"
                   />
+                  <label htmlFor="level-1">100</label>
                 </li>
                 <li>
-                  <label htmlFor="level-2">200</label>
                   <input
                     type="checkbox"
                     name="second-year"
                     value={200}
                     id="level-2"
                   />
+                  <label htmlFor="level-2">200</label>
                 </li>
                 <li>
-                  <label htmlFor="level-3">300</label>
                   <input
                     type="checkbox"
                     name="third-year"
                     value={300}
                     id="level-3"
                   />
+                  <label htmlFor="level-3">300</label>
                 </li>
                 <li>
-                  <label htmlFor="level-4">400</label>
                   <input
                     type="checkbox"
                     name="fourth-year"
                     value={400}
                     id="level-4"
                   />
+                  <label htmlFor="level-4">400</label>
                 </li>
               </ul>
             </li>
@@ -136,15 +159,15 @@ const Admin = () => {
               <ul>
                 {campuses.map(campus => (
                   <li key={campus}>
-                    <label htmlFor={`${slugify(campus)}-campus`}>
-                      {campus}
-                    </label>
                     <input
                       type="checkbox"
                       name={slugify(campus)}
                       value={campus}
                       id={`${slugify(campus)}-campus`}
                     />
+                    <label htmlFor={`${slugify(campus)}-campus`}>
+                      {campus}
+                    </label>
                   </li>
                 ))}
               </ul>
@@ -153,29 +176,29 @@ const Admin = () => {
               <p>Payment status</p>
               <ul>
                 <li>
-                  <label htmlFor="payment-paid">Paid</label>
                   <input
                     id="payment-paid"
                     name="paid"
                     type="checkbox"
                     value={1}
                   />
+                  <label htmlFor="payment-paid">Paid</label>
                 </li>
                 <li>
-                  <label htmlFor="payment-paid-not-paid">Not Paid</label>
                   <input
                     id="payment-paid-not-paid"
                     name="not-paid"
                     type="checkbox"
                     value={0}
                   />
+                  <label htmlFor="payment-paid-not-paid">Not Paid</label>
                 </li>
               </ul>
             </li>
           </ul>
         </form>
       </section>
-      <table>
+      <table className={styles.table}>
         <thead>
           <tr>
             <th>Student Name</th>
@@ -190,12 +213,58 @@ const Admin = () => {
               <td>{user.name}</td>
               <td>{user.level}</td>
               <td>{user.campus}</td>
-              <td>{user.paid ? "✔" : "❌"}</td>
+              <td className={user.paid ? "green" : undefined}>
+                {user.paid ? "✔" : "❌"}
+              </td>
             </tr>
           ))}
         </tbody>
-        <tfoot></tfoot>
+        <tfoot>
+          <div>
+            <Button
+              variant="outlined"
+              onClick={prev}
+              disabled={page <= 1}
+              className={styles.button}
+            >
+              Previous
+            </Button>
+          </div>
+          <div id="table-config" className={styles.config}>
+            <div>
+              <span>{users?.length}</span>/<span>{total}</span>
+            </div>
+            <div>
+              <select
+                name="limit-per-page"
+                id="limit-per-page"
+                onChange={handleChangeSelect}
+              >
+                {[1, 2, 3, 4, 5].map(op => (
+                  <option key={op} value={op * 10}>
+                    {op * 10}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div>
+            <Button
+              variant="outlined"
+              onClick={next}
+              disabled={!hasMore}
+              className={styles.button}
+            >
+              Next
+            </Button>
+          </div>
+        </tfoot>
       </table>
+      <style jsx>{`
+        .green {
+          color: var(--primary-color);
+        }
+      `}</style>
     </main>
   );
 };
