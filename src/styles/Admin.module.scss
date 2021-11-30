@@ -74,6 +74,7 @@
   width: 100%;
   border-collapse: collapse;
   margin-top: 2rem;
+  position: relative;
 
   td,
   th {
@@ -96,7 +97,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
+    position: absolute;
     .config {
       display: flex;
       gap: 1rem;

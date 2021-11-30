@@ -18,7 +18,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <section id="hero" className={styles.inner_grid}>
-          <h1 className={styles.text}>Welcome to the ACSES - UMaT portal</h1>
+          <h1 className={styles.text}>Welcome to UMaT payments portal</h1>
           <div className={styles.buttons}>
             <Link href="/register">
               <a
@@ -37,7 +37,7 @@ export default function Home() {
                   buttonStyles["button-main-light"]
                 )}
               >
-                Pay Dues
+                Make Payment
               </a>
             </Link>
           </div>
