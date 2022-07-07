@@ -43,6 +43,7 @@ const Dues = () => {
       reference
     });
     console.log(reference);
+    window.location.reload();
   };
 
   //Closed Payment modal

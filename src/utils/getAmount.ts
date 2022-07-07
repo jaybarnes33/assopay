@@ -1,7 +1,7 @@
 export const getAmount = (level: number) => {
   switch (level) {
     case 100:
-      return 52;
+      return 50;
 
     case 200:
     case 300:
