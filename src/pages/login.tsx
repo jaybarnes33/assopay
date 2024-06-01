@@ -79,7 +79,7 @@ const Login = () => {
           <div className={styles.form_container}>
             <Alert variant="info">
               <p>
-                Provide valid <b className="bold-white">student email</b> and
+                Provide valid <b className="bold-white"> email</b> and
                 <b className="bold-white"> password</b> to continue.
               </p>
             </Alert>
@@ -96,7 +96,7 @@ const Login = () => {
                     name="email"
                     required
                     onChange={handleChange}
-                    placeholder="Ex. ce-jadoe6020@st.umat.edu.gh"
+                    placeholder="Ex. mail@gmail.com"
                   />
                 </div>
                 <div className={styles.input}>

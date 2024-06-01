@@ -12,7 +12,6 @@ import { FormikHelpers, FormikProps, useFormik } from "formik";
 import {
   contactInfo,
   initialValues,
-  institutionalInfo,
   loginInfo,
   personalInfo,
   TValues,
@@ -32,8 +31,7 @@ const CurrentStep = ({
   const steps: Record<number, JSX.Element> = {
     1: <PersonalInfo formik={formik} />,
     2: <LoginInfo formik={formik} />,
-    3: <InstitutionalInfo formik={formik} />,
-    4: <ContactInfo formik={formik} />
+    3: <ContactInfo formik={formik} />
   };
 
   return steps[activeStep];
@@ -49,6 +47,7 @@ const MultiStep = () => {
     { setSubmitting }: FormikHelpers<TValues>
   ) => {
     try {
+      console.log({ msg: "here" });
       setSubmitting(true);
       const { data } = await axios.post("/api/users/register", values);
 
@@ -81,11 +80,10 @@ const MultiStep = () => {
     const steps = {
       1: personalInfo,
       2: loginInfo,
-      3: institutionalInfo,
-      4: contactInfo
+      3: contactInfo
     };
 
-    const fields = Object.keys(steps[step as 1 | 2 | 3 | 4]);
+    const fields = Object.keys(steps[step as 1 | 2 | 3]);
 
     fields.forEach(field => formik.setFieldTouched(field));
     const error = Object.keys(formik.errors).some(field =>
@@ -108,10 +106,8 @@ const MultiStep = () => {
           <Button color="light" onClick={prevStep} disabled={step === 1}>
             Back
           </Button>
-          {step === 4 ? (
-            <Button type="submit" disabled={formik.isSubmitting}>
-              Sign up
-            </Button>
+          {step === 3 ? (
+            <Button type="submit">Sign up</Button>
           ) : (
             <Button onClick={nextStep}>Next</Button>
           )}

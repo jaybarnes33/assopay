@@ -9,14 +9,14 @@ const LoginInfo = ({ formik }: { formik: TFormik }) => {
       <div className={styles.inner}>
         <div className={styles.input}>
           <label htmlFor="email">
-            Student Email <span>*</span>
+            Email <span>*</span>
           </label>
           <input
             required
             id="email"
             name="email"
             type="email"
-            placeholder="Ex. ce-jadoe6020@st.umat.edu.gh"
+            placeholder="Ex. mail@gmail.com"
             value={values.email}
             onChange={handleChange}
             aria-describedby="email-message"

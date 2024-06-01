@@ -8,17 +8,17 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Acses Portal</title>
+        <title>AssoPay</title>
         <meta
           name="description"
-          content="Welcome to the ACSES-UMaT portal, pay your dues, get course content and more"
+          content="Welcome to the AssoPay, pay your dues with ease."
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
         <section id="hero" className={styles.inner_grid}>
-          <h1 className={styles.text}>Welcome to UMaT payments portal</h1>
+          <h1 className={styles.text}>Welcome to Assopay</h1>
           <div className={styles.buttons}>
             <Link href="/register">
               <a
