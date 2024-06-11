@@ -17,7 +17,7 @@ const Dues = () => {
     if (!user && !authenticating && !isAuthenticated) {
       router.push("/login");
     } else {
-      user && setAmount(getAmount(user.level));
+      user && setAmount(50);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authenticating, user]);
@@ -31,8 +31,8 @@ const Dues = () => {
     currency: "GHS",
     publicKey:
       process.env.NEXT_PUBLIC_ENV === "production"
-        ? "pk_live_4f77f76738fd6becf0a144ab06fa7e614e779868"
-        : "pk_test_416cb666b87d1627e714824ceb3fc4e9ff3e6acc"
+        ? process.env.NEXT_PUBLIC_PAYSTACK_KEY!
+        : process.env.NEXT_PUBLIC_PAYSTACK_TEST!
   });
 
   console.log(isPaid(user?.dues));

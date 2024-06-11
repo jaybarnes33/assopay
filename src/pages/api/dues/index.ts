@@ -15,8 +15,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       const user = await User.findById(userID);
 
-      user?.dues.push({
-        year: `${new Date().getFullYear()} - ${new Date().getFullYear() + 1}`,
+      user?.payments?.push({
         amount: amount,
         reference: reference
       });

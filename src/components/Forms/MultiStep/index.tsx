@@ -1,6 +1,5 @@
 import { useState } from "react";
 import ContactInfo from "../ContactInfo";
-import InstitutionalInfo from "../InstitutionalInfo";
 import LoginInfo from "../LoginInfo";
 import PersonalInfo from "../PersonInfo";
 import styles from "@/styles/Forms.module.scss";

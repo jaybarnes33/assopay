@@ -17,20 +17,13 @@ export const contactInfo = {
   phone: ""
 };
 
-export const institutionalInfo = {
-  campus: "",
-  level: undefined,
-  hall: ""
-};
-
 export const initialValues = {
   ...personalInfo,
   ...loginInfo,
-  ...contactInfo,
-  ...institutionalInfo
+  ...contactInfo
 };
 
-export type TValues = Omit<typeof initialValues, "level"> & { level?: number };
+export type TValues = typeof initialValues;
 
 export const validationSchema = Yup.object({
   firstName: Yup.string().required().label("First Name"),
@@ -51,8 +44,5 @@ export const validationSchema = Yup.object({
         : field
     )
     .label("Confirm Password"),
-  level: Yup.string().required().label("Level"),
-  hall: Yup.string().required().label("Hall"),
-  campus: Yup.string().required().label("Campus"),
   phone: Yup.string().required().length(10).label("Phone Number")
 });

@@ -2,7 +2,6 @@ import mongoose, { Document, Schema } from "mongoose";
 import bcrypt from "bcryptjs";
 
 interface IDues {
-  year: string;
   amount: string;
   reference: Record<string, string | number>;
 }
@@ -17,9 +16,7 @@ export interface IUserSchema extends Document {
   username: string;
   password: string;
   otherNames: string;
-  level: number;
-  dues: Array<IDues>;
-  campus: string;
+  payments: IDues[];
   isAdmin: boolean;
 }
 
@@ -35,9 +32,6 @@ const userSchema = new Schema<IUserSchema>({
   otherNames: {
     type: String
   },
-  hall: {
-    type: String
-  },
   password: {
     type: String,
     min: 8,
@@ -48,40 +42,26 @@ const userSchema = new Schema<IUserSchema>({
     unique: true,
     required: true
   },
-  level: {
-    type: Number,
-    required: true
-  },
+
   gender: {
     type: String
   },
   phone: { type: String },
-  dues: [
-    {
-      type: new Schema({
-        year: {
-          type: String,
-          default: `${new Date().getFullYear()} - ${
-            new Date().getFullYear() + 1
-          }`
-        },
-        amount: {
-          type: Number,
-          default: 0
-        },
 
-        reference: {
-          type: Schema.Types.Mixed
-        }
-      })
-    }
-  ],
   isAdmin: {
     type: Boolean,
     required: true,
     default: false
   },
-  campus: { type: String, required: true }
+  payments: [
+    {
+      amount: String,
+      reference: {
+        type: Map,
+        of: String
+      }
+    }
+  ]
 });
 
 userSchema.pre("save", async function (next) {
